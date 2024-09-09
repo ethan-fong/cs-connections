@@ -69,7 +69,7 @@ function Game() {
       };
 
       try {
-        API_COLLECT_URL = `${BASE_API}submit-stats/`
+        const API_COLLECT_URL = `${BASE_API}submit-stats/`
         console.log(API_COLLECT_URL);
         console.log(JSON.stringify(endGameData));
         const response = await fetch(API_COLLECT_URL, { // Replace with your actual endpoint
