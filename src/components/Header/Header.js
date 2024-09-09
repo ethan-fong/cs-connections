@@ -4,8 +4,8 @@ import InfoModal from "../modals/InfoModal";
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 import STATIC_GAME_HEADER from "../../../public/static/sample_game_1.json";
 
-MAX_RETRIES = 3
-RETRY_DELAY = 2000
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000;
 
 function Header() {
   const {title, loading, author} = React.useContext(PuzzleDataContext);

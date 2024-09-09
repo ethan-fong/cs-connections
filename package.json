@@ -35,7 +35,7 @@
   "scripts": {
     "predev": "rimraf .parcel-cache dist",
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html --public-url /thesis-connections-game/",
+    "build": "parcel build src/index.html --public-url /cs-connections/",
     "nc": "new-component",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
