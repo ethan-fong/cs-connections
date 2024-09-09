@@ -1316,21 +1316,6 @@ body {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.header-container {
-  text-align: center;
-  padding: 20px;
-}
-
-.header-container h1 {
-  margin-bottom: .5em;
-  font-size: 2em;
-}
-
-.header-container h2 {
-  margin-top: 0;
-  font-size: 1.5em;
-}
-
 ._9XSUmq_selected {
   border: 2px solid #000;
 }
