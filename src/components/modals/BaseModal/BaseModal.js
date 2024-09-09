@@ -53,7 +53,10 @@ function BaseModal({
         <AlertDialogFooter>
           {footerElements}
           {showActionButton && (
-            <AlertDialogAction onClick={() => setIsOpen(false)}>
+            <AlertDialogAction onClick={() => {
+              setIsOpen(false);
+              onClose();
+            }}>
               {actionButtonText}
             </AlertDialogAction>
           )}

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 export const PuzzleDataContext = createContext('default_context');
 
-const BASE_API = process.env.LOCAL_DEV
+const BASE_API = process.env.REACT_APP_LOCAL_DEVELOPMENT
   ? "https://connections-backend-production.up.railway.app/api/"
   : "http://localhost:8000/api/";
 const MAX_RETRIES = 3; // Number of retries

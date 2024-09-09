@@ -14,7 +14,7 @@ import { GameStatusContext } from "../../providers/GameStatusProvider";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
 
-const BASE_API = process.env.LOCAL_DEV
+const BASE_API = process.env.REACT_APP_LOCAL_DEVELOPMENT
   ? "https://connections-backend-production.up.railway.app/api/"
   : "http://localhost:8000/api/";
 
