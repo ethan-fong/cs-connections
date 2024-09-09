@@ -32,8 +32,6 @@ export default function PuzzleDataProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const { gameId } = useParams();  // Extract gameId from URL
 
-  JSON_URL = `${BASE_API}connectionsgames/${gameId}/?format=json`
-
   useEffect(() => {
     const fetchGameData = async (retries = MAX_RETRIES) => {
       if (!gameNumber){
@@ -41,6 +39,7 @@ export default function PuzzleDataProvider({ children }) {
         setGameNumber(gameId)
       }
       try {
+        const JSON_URL = `${BASE_API}connectionsgames/${gameId}/?format=json`
         console.log('Fetching data...');
         const response = await fetch(JSON_URL);
         if (!response.ok) {
