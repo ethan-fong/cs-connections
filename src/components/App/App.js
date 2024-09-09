@@ -9,7 +9,7 @@ import GameStatusProvider from "../../providers/GameStatusProvider";
 
 function App() {
   return (
-    <Router>
+    <HashRouter>
       <Routes>
       <Route path="/game/:gameId" element={
         <PuzzleDataProvider>
@@ -23,7 +23,7 @@ function App() {
         </PuzzleDataProvider>
       } />
       </Routes>
-    </Router>
+    </HashRouter>
   );
 }
 
