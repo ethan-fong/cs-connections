@@ -18,6 +18,7 @@ function GameControlButtonsPanel({
 }) {
   const {
     isGameOver,
+    setIsGameOver,
     guessCandidate,
     setGuessCandidate,
     submittedGuesses,
@@ -89,9 +90,21 @@ function GameControlButtonsPanel({
       }
     }
   }
+  function GiveUp() {
+    console.log("giving up");
+    // add guess to state
+    setIsGameOver(true);
+    }
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-4 gap-4">
+      <Button
+        variant="submit"
+        onClick={() => GiveUp()}
+        disabled={isGameOver}
+      >
+        <p className="select-none">Give Up</p>
+      </Button>
       <Button
         disabled={isGameOver}
         variant="secondary"

@@ -20,6 +20,9 @@ function BaseModal({
   children,
   actionButtonText = "Continue",
   showActionButton = true,
+  onClose = () => {
+    // do nothing by default
+  },
 }) {
   const [isOpen, setIsOpen] = React.useState(initiallyOpen);
 
@@ -28,6 +31,8 @@ function BaseModal({
   }, [initiallyOpen]);
 
   function handleCloseEvent() {
+    console.log("modal closed");
+    onClose();
     setIsOpen(false);
   }
 

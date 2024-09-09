@@ -20,14 +20,15 @@ function GameStatusProvider({ children }) {
   const [isGameOver, setIsGameOver] = React.useState(false);
   const [isGameWon, setIsGameWon] = React.useState(false);
   const [guessCandidate, setGuessCandidate] = React.useState([]);
-
+  const [isGameStarted, setIsGameStarted] = React.useState(false);
+  
   // Set startTime once when the first guess is made
   React.useEffect(() => {
-    if (!startTime && submittedGuesses.length === 0) {
+    if (isGameStarted && !startTime) {
       setStartTime(Date.now()); // Set start time when the first guess is submitted
       console.log("Start time recorded:", Date.now());
     }
-  }, [submittedGuesses, startTime]);
+  }, [isGameStarted]);
 
   const numMistakesUsed = submittedGuesses.length - solvedGameData.length;
 
@@ -92,12 +93,15 @@ function GameStatusProvider({ children }) {
       console.log("Current game state:", gameState);
       saveGameStateToLocalStorage(gameState);
     }
-  }, [submittedGuesses, startTime]);
+  }, [submittedGuesses]);
 
   return (
     <GameStatusContext.Provider
       value={{
+        isGameStarted,
+        setIsGameStarted,
         isGameOver,
+        setIsGameOver,
         isGameWon,
         numMistakesUsed,
         solvedGameData,

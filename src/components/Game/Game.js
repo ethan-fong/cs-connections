@@ -4,6 +4,7 @@ import GameGrid from "../GameGrid";
 import NumberOfMistakesDisplay from "../NumberOfMistakesDisplay";
 import GameLostModal from "../modals/GameLostModal";
 import GameWonModal from "../modals/GameWonModal";
+import StartGameModal from '../modals/StartGameModal'; // Import the StartGameModal component
 
 import { Separator } from "../ui/separator";
 import ConfettiExplosion from "react-confetti-explosion";
@@ -13,11 +14,13 @@ import { GameStatusContext } from "../../providers/GameStatusProvider";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
 
-const BASE_API = "https://connections-backend-production.up.railway.app/api/"
+const BASE_API = process.env.LOCAL_DEV
+  ? "https://connections-backend-production.up.railway.app/api/"
+  : "http://localhost:8000/api/";
 
 function Game() {
   const { gameData, categorySize, numCategories, error, loading, gameNumber } = React.useContext(PuzzleDataContext);
-  const { submittedGuesses, solvedGameData, isGameOver, isGameWon, timeToGuess } =
+  const { isGameStarted, setIsGameStarted, submittedGuesses, solvedGameData, isGameOver, isGameWon, timeToGuess } =
     React.useContext(GameStatusContext);
   console.log("Context Values:", { gameData, categorySize, numCategories, error, loading, gameNumber });
 
@@ -33,6 +36,11 @@ function Game() {
   const [isEndGameModalOpen, setisEndGameModalOpen] = React.useState(false);
   const [gridShake, setGridShake] = React.useState(false);
   const [showConfetti, setShowConfetti] = React.useState(false);
+
+  const handleStartGame = () => {
+    console.log("starting game! in game.js")
+    setIsGameStarted(true);
+  };
 
   // use effect to update Game Grid after a row has been correctly solved
   React.useEffect(() => {
@@ -67,12 +75,15 @@ function Game() {
         "isGameWon": isGameWon,                // This is a boolean
         "timeToGuess": timeToGuess,            // This is an array
       };
-
+      if (submittedGuesses.length === 0) {
+        console.log("not sending empty data")
+        return;
+      }
       try {
         const API_COLLECT_URL = `${BASE_API}submit-stats/`
         console.log(API_COLLECT_URL);
         console.log(JSON.stringify(endGameData));
-        const response = await fetch(API_COLLECT_URL, { // Replace with your actual endpoint
+        const response = await fetch(API_COLLECT_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -164,6 +175,7 @@ function Game() {
           <ViewResultsModal />
         )}
       </div>
+      <StartGameModal onStart={handleStartGame} />
     </>
   );
 }

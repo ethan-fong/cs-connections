@@ -3,21 +3,10 @@ import { useParams } from 'react-router-dom';
 
 export const PuzzleDataContext = createContext('default_context');
 
-const BASE_API = "https://connections-backend-production.up.railway.app/api/"
+const BASE_API = process.env.LOCAL_DEV
+  ? "https://connections-backend-production.up.railway.app/api/"
+  : "http://localhost:8000/api/";
 const MAX_RETRIES = 3; // Number of retries
-
-// function PuzzleDataProvider({ children }) {
-//   const [gameData, setGameData] = React.useState(puzzleAnswers);
-//   const categorySize = gameData[0].words.length;
-//   const numCategories = gameData.length;
-//   return (
-//     <PuzzleDataContext.Provider
-//       value={{ gameData, numCategories, categorySize }}
-//     >
-//       {children}
-//     </PuzzleDataContext.Provider>
-//   );
-// }
 
 const RETRY_DELAY = 2000;
 
