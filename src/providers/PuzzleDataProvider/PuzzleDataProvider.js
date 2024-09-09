@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 export const PuzzleDataContext = createContext('default_context');
 
-const BASE_API = "http://127.0.0.1:8000/api/"
+const BASE_API = "https://connections-backend-production.up.railway.app/api/"
 const MAX_RETRIES = 3; // Number of retries
 
 // function PuzzleDataProvider({ children }) {
@@ -32,7 +32,7 @@ export default function PuzzleDataProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const { gameId } = useParams();  // Extract gameId from URL
 
-  JSON_URL = `${BASE_API}getgame/${gameId}/`
+  JSON_URL = `${BASE_API}connectionsgames/${gameId}/?format=json`
 
   useEffect(() => {
     const fetchGameData = async (retries = MAX_RETRIES) => {

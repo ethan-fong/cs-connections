@@ -1,0 +1,11 @@
+{
+    "gameId" : 6,
+    "submittedGuesses":[
+        ["+","**","-","//"],
+        ["8 % 3","1 + 1","4//2","min(2, 3)"],
+        ["range(5,)","MIN(2, 3)","Min(2, 2.5)","7 / / 3"],
+        ["and","assert","not","is"]
+    ],
+    "isGameWon" : true,
+    "timeToGuess" : [13.407,17.094,20.291,22.158]
+}

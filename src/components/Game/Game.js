@@ -13,7 +13,7 @@ import { GameStatusContext } from "../../providers/GameStatusProvider";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
 
-const BASE_API = "http://127.0.0.1:8000/api/"
+const BASE_API = "https://connections-backend-production.up.railway.app/api/"
 
 function Game() {
   const { gameData, categorySize, numCategories, error, loading, gameNumber } = React.useContext(PuzzleDataContext);
@@ -69,7 +69,7 @@ function Game() {
       };
 
       try {
-        API_COLLECT_URL = `${BASE_API}submit/`
+        API_COLLECT_URL = `${BASE_API}submit-stats/`
         console.log(API_COLLECT_URL);
         console.log(JSON.stringify(endGameData));
         const response = await fetch(API_COLLECT_URL, { // Replace with your actual endpoint
