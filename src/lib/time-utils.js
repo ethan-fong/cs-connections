@@ -55,7 +55,7 @@ export const getPuzzleOfDay = (index) => {
   if (index < 0) {
     throw new Error("Invalid index");
   }
-  console.log("static game", STATIC_GAME)
+  //console.log("static game", STATIC_GAME)
   return STATIC_GAME.game
   return CONNECTION_GAMES[index % CONNECTION_GAMES.length];
 };

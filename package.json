@@ -1,5 +1,5 @@
 {
-  "homepage": "https://ethan-fong.github.io/thesis-connections-game",
+  "homepage": "https://ethan-fong.github.io/cs-connections",
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
