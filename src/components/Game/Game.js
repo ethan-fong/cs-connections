@@ -15,8 +15,8 @@ import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
 
 const BASE_API = process.env.REACT_APP_LOCAL_DEVELOPMENT
-  ? "https://connections-backend-production.up.railway.app/api/"
-  : "http://localhost:8000/api/";
+  ? "http://localhost:8000/api/"
+  : "https://connections-backend-production.up.railway.app/api/";
 
 function Game() {
   const { gameData, categorySize, numCategories, error, loading, gameNumber } = React.useContext(PuzzleDataContext);
