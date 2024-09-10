@@ -7,7 +7,7 @@ const MAX_RETRIES = 3;
 const RETRY_DELAY = 2000;
 
 function Header() {
-  const {title, loading, author} = React.useContext(PuzzleDataContext);
+  const {title, loading} = React.useContext(PuzzleDataContext);
   if (loading){
     return (
       <header>
@@ -18,7 +18,7 @@ function Header() {
   }
   return (
     <header>
-      <h1 className="font-space-mono">{title} by {author}</h1>
+      <h1 className="font-space-mono">{title}</h1>
       <InfoModal />
     </header>
   );

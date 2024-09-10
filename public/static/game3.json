@@ -1,0 +1,37 @@
+{
+    "title": "CSC108 Week 2 Connections",
+    "created_at": "2024-09-04T15:00:55.326394Z",
+    "author" : "Ethan Fong",
+    "num_categories": 4,
+    "words_per_category": 4,
+    "game" : [
+        {
+          "category": "Python builtin functions",
+          "words": ["pow", ",max", "help", "round"],
+          "is_py_code" : [],
+          "difficulty": 1,
+          "explanation": "All these Python functions provide built-in utility for performing common operations, such as mathematical calculations - pow, max, round and accessing documentation - help"
+        },
+        {
+          "category": "Python arithmetic operators",
+          "words": ["+", "**", "-", "//"],
+          "is_py_code" : [],
+          "difficulty": 2,
+          "explanation": "These are all python arithmetic operators that are used for mathematical operations"
+        },
+        {
+          "category": "Will raise an error in Python",
+          "words": ["range(5,)", "Min(2, 2.5)", "MIN(2, 3)", "7 / / 3"],
+          "is_py_code" : ["range(5,)", "Min(2, 2.5)", "MIN(2, 3)", "7 / / 3"],
+          "difficulty": 3,
+          "explanation": "Range takes in either 1 or two values, but the second was not provided. Min and MIN are not valid due to capitalization. 7 / / 3 will raise an error due to the space between slashes."
+        },
+        {
+          "category": "Python Statements that Evaluate to 2",
+          "words": ["4//2", "8 % 3", "1 + 1", "min(2, 3)"],
+          "is_py_code" : ["4//2", "8 % 3", "1 + 1", "min(2, 3)"],
+          "difficulty": 4,
+          "explanation": "If you run these statements in a python command line you will get 2!"
+        }
+      ]
+}
