@@ -1411,6 +1411,10 @@ body {
   }
 }
 
+.gamezoomwrapper {
+  zoom: 1.7;
+}
+
 *, :before, :after {
   box-sizing: border-box;
 }
