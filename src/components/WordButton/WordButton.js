@@ -71,7 +71,11 @@ function WordButton({ word, fullCandidateSize }) {
       variant="outline"
       pressed={isSelected}
       onClick={flipSelection}
-      style={{ height: '75px' }} // Adjust height here
+      style={{
+        height: 'auto', // Allow height to adjust based on content
+        width: 'auto', // Set width to auto to adjust based on content
+        padding: '8px', // Optional: Add padding to the toggle
+      }}
     >
       <SyntaxHighlighter
         language="python" // Change this to the appropriate language
@@ -81,6 +85,7 @@ function WordButton({ word, fullCandidateSize }) {
           display: 'inline', // Ensure it displays inline if desired
           padding: '8px', // Optional: Add some padding
           borderRadius: '4px', // Optional: Add rounded corners
+          whiteSpace: 'normal', // Allow text to wrap
           backgroundColor: '#ffffff', // Set background color to white
         }}
       >
