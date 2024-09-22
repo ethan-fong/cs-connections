@@ -26,6 +26,7 @@
     "react-dom": "18.2.0",
     "react-router-dom": "^6.26.1",
     "react-spring": "^9.7.3",
+    "react-syntax-highlighter": "^15.5.0",
     "rimraf": "5.0.1",
     "styled-components": "^6.1.0",
     "tailwind-merge": "^1.14.0",
