@@ -1304,11 +1304,6 @@ body {
     text-align: left;
   }
 
-  .sm\:text-xs {
-    font-size: .75rem;
-    line-height: 1rem;
-  }
-
   .data-\[state\=open\]\:sm\:slide-in-from-bottom-full[data-state="open"] {
     --tw-enter-translate-y: 100%;
   }
@@ -1321,11 +1316,6 @@ body {
 
   .md\:max-w-\[420px\] {
     max-width: 420px;
-  }
-
-  .md\:text-xs {
-    font-size: .75rem;
-    line-height: 1rem;
   }
 }
 
