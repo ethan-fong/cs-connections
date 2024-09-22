@@ -74,7 +74,7 @@ function WordButton({ word, fullCandidateSize }) {
       style={{
         height: 'auto', // Allow height to adjust based on content
         width: 'auto', // Set width to auto to adjust based on content
-        padding: '8px', // Optional: Add padding to the toggle
+        padding: '3px', // Optional: Add padding to the toggle
       }}
     >
       <SyntaxHighlighter
@@ -83,7 +83,7 @@ function WordButton({ word, fullCandidateSize }) {
         customStyle={{
           fontSize: getFontSize(word), // Set the font size here
           display: 'inline', // Ensure it displays inline if desired
-          padding: '8px', // Optional: Add some padding
+          padding: '3px', // Optional: Add some padding
           borderRadius: '4px', // Optional: Add rounded corners
           whiteSpace: 'normal', // Allow text to wrap
           backgroundColor: '#ffffff', // Set background color to white
