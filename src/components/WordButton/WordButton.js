@@ -55,7 +55,7 @@ function WordButton({ word, fullCandidateSize }) {
 
     // More aggressive scaling if newlines are present
     if (numNewlines > 0) {
-        fontSize = fontSize - numNewlines * 0.05; // Adjust this factor as needed
+        fontSize = fontSize - numNewlines * 0.1; // Adjust this factor as needed
     }
 
     // Ensure font size doesn't go below 0.6em
