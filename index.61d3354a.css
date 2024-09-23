@@ -1,3 +1,27 @@
+html, body, #root {
+  zoom: 1.2;
+  width: 100%;
+  height: 100%;
+}
+
+@media (width <= 1200px) {
+  #root {
+    zoom: 1.3;
+  }
+}
+
+@media (width <= 768px) {
+  #root {
+    zoom: 1.4;
+  }
+}
+
+@media (width <= 480px) {
+  #root {
+    zoom: .9;
+  }
+}
+
 *, :before, :after {
   box-sizing: border-box;
   border: 0 solid #e5e7eb;
