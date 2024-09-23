@@ -18,7 +18,7 @@ function Header() {
   }
   return (
     <header>
-      <h1 className="font-space-mono">{title}</h1>
+      <h1 className="font-space-mono" style={{ fontSize: title.length > 20 ? '1.5rem' : '2rem' }}>{title}</h1>
       <InfoModal />
     </header>
   );
