@@ -3,12 +3,10 @@ import React from "react";
 import InfoModal from "../modals/InfoModal";
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 
-const MAX_RETRIES = 3;
-const RETRY_DELAY = 2000;
-
 function Header() {
-  const {title, loading} = React.useContext(PuzzleDataContext);
-  if (loading){
+  const { title, loading } = React.useContext(PuzzleDataContext);
+
+  if (loading) {
     return (
       <header>
         <h1 className="font-space-mono">Loading...</h1>
@@ -16,12 +14,25 @@ function Header() {
       </header>
     );
   }
+
+  // Set a default title if the title is null or undefined
+  const displayTitle = title || "CS Connections";
+
   return (
     <header>
-      <h1 className="font-space-mono" style={{ fontSize: title.length > 20 ? '1rem' : '1.5rem', whiteSpace: 'nowrap' }}>{title}</h1>
+      <h1
+        className="font-space-mono"
+        style={{
+          fontSize: displayTitle.length > 20 ? '1rem' : '1.5rem',
+          whiteSpace: 'nowrap'
+        }}
+      >
+        {displayTitle}
+      </h1>
       <InfoModal />
     </header>
   );
 }
+
 
 export default Header;

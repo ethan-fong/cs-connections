@@ -1,5 +1,5 @@
 {
-  "homepage": "https://ethan-fong.github.io/cs-connections",
+  "homepage": "https://vm006.teach.cs.toronto.edu/",
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
@@ -9,6 +9,8 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-toggle": "^1.0.3",
+    "axios": "^1.7.7",
+    "chart.js": "^4.4.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
@@ -21,6 +23,7 @@
     "process": "0.11.10",
     "query-string": "^8.1.0",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-confetti-explosion": "^2.1.2",
     "react-countdown": "^2.3.5",
     "react-dom": "18.2.0",
@@ -36,7 +39,7 @@
   "scripts": {
     "predev": "rimraf .parcel-cache dist",
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html --public-url /cs-connections/",
+    "build": "parcel build src/index.html",
     "nc": "new-component",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"

@@ -49,6 +49,19 @@
   transition: opacity 0.4s ease;
 } */
 
+.growShrink {
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.growShrink:hover {
+  background-color: #d3d3d3; /* Change background on hover */
+}
+
+.growShrink:active {
+  transform: scale(0.95); /* Optional: provide a pressed effect */
+}
+
+
 .wordText {
   white-space: pre-wrap; /* Preserves newlines and tabs */
   text-align: left;      /* Align text to the left */

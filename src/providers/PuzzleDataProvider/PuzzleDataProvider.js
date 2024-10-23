@@ -5,7 +5,7 @@ export const PuzzleDataContext = createContext('default_context');
 
 const BASE_API = process.env.REACT_APP_LOCAL_DEVELOPMENT
   ? "http://localhost:8000/api/"
-  : "https://connections-backend-production.up.railway.app/api/";
+  : "https://vm006.teach.cs.toronto.edu/backend/api/";
 const MAX_RETRIES = 3; // Number of retries
 
 const RETRY_DELAY = 2000;
@@ -24,15 +24,15 @@ export default function PuzzleDataProvider({ children }) {
   useEffect(() => {
     const fetchGameData = async (retries = MAX_RETRIES) => {
       if (!gameNumber){
-        console.log("setting game number to ", gameId);
+        //console.log("game code: ", gameId);
         setGameNumber(gameId)
       }
       try {
-        const JSON_URL = `${BASE_API}connectionsgames/${gameId}/?format=json`
+        const JSON_URL = `${BASE_API}games/code/${gameId}/?format=json`
         console.log('Fetching data...');
         const response = await fetch(JSON_URL);
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error(`Failed to fetch game data due to ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
         console.log('Fetched data:', data);

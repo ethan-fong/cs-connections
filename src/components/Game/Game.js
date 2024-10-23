@@ -14,15 +14,13 @@ import { GameStatusContext } from "../../providers/GameStatusProvider";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
 
-const BASE_API = process.env.REACT_APP_LOCAL_DEVELOPMENT
-  ? "http://localhost:8000/api/"
-  : "https://connections-backend-production.up.railway.app/api/";
+const BASE_API = "https://vm006.teach.cs.toronto.edu/backend/api/";
 
 function Game() {
   const { gameData, categorySize, numCategories, error, loading, gameNumber } = React.useContext(PuzzleDataContext);
   const { isGameStarted, setIsGameStarted, submittedGuesses, solvedGameData, isGameOver, isGameWon, timeToGuess } =
     React.useContext(GameStatusContext);
-  console.log("Context Values:", { gameData, categorySize, numCategories, error, loading, gameNumber });
+  //console.log("Context Values:", { gameData, categorySize, numCategories, error, loading, gameNumber });
 
   // Wait until gameData is available and then shuffle
   const [shuffledRows, setShuffledRows] = React.useState([]); // Start as an empty array
@@ -38,7 +36,7 @@ function Game() {
   const [showConfetti, setShowConfetti] = React.useState(false);
 
   const handleStartGame = () => {
-    console.log("starting game! in game.js")
+    //console.log("starting game! in game.js")
     setIsGameStarted(true);
   };
 
@@ -64,13 +62,13 @@ function Game() {
       return;
     }
     // extra delay for game won to allow confetti to show
-    console.log("ending game state", submittedGuesses, isGameWon, timeToGuess)
+    //console.log("ending game state", submittedGuesses, isGameWon, timeToGuess)
 
     // Define a function to send the POST request
     const sendPostRequest = async () => {
-      console.log("gamenumber", gameNumber);
+      console.log("Game Code", gameNumber);
       const endGameData = {
-        "gameId" : gameNumber,
+        "gameCode" : gameNumber,
         "submittedGuesses" : submittedGuesses,  // This is an array
         "isGameWon": isGameWon,                // This is a boolean
         "timeToGuess": timeToGuess,            // This is an array
@@ -130,9 +128,11 @@ function Game() {
 
   return (
     <>
-      <h3 className="text-xl text-center mt-4">
-        Create {numCategories} groups of {categorySize}
-      </h3>
+      <div className="text-center mt-4"> {/* Wrap the h3 in a div to maintain proper nesting */}
+        <h3 className="text-xl">
+          Create {numCategories} groups of {categorySize}
+        </h3>
+      </div>
 
       <div className={`game-wrapper`}>
         {isGameOver && isGameWon ? (

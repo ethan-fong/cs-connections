@@ -60,7 +60,7 @@ function WordButton({ word, fullCandidateSize }) {
 
     // Ensure font size doesn't go below 0.6em
     fontSize = Math.max(0.6, fontSize);
-    console.log(fontSize)
+    //console.log(fontSize)
 
     return `${fontSize}em`;
   }

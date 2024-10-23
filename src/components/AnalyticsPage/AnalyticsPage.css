@@ -1,0 +1,110 @@
+/* Style for the dashboard container */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    }
+    
+    /* Style for the chart container */
+    .chart-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 8px;
+    }
+    .stats-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        font-family: Helvetica, Arial, sans-serif;
+        padding-bottom: 20px; /* Adds padding to the bottom */
+      }
+      
+      .stats-row p {
+        margin: 0; /* Removes default margin for <p> tags */
+        font-size: 1.1rem;
+      }
+    /* Style for the number selector container */
+    .number-selector, .stats-p {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Style for the increment/decrement buttons */
+    .number-selector .stats-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 18px;
+    margin: 0 5px;
+    transition: background-color 0.3s;
+    }
+    
+    .number-selector .stats-button:hover {
+    background-color: #0056b3;
+    }
+    
+    /* Style for the number display */
+    .number-selector input {
+    border: none;
+    text-align: center;
+    font-size: 18px;
+    width: 60px;
+    margin: 0 10px;
+    }
+    
+    .number-selector input:focus {
+    outline: none;
+    }
+    
+    /* Style for text annotations */
+    .number-selector .annotation {
+    font-size: 14px;
+    color: #666;
+    margin-right: 10px;
+    }
+    /* Style for labels and titles */
+    .stats-h1, .stats-h2, .stats-h3 {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #333;
+    }
+    
+    
+    .stats-h2 {
+    font-size: 20px;
+    }
+    
+    .stats-h3 {
+    font-size: 18px;
+    }
+    
+    /* General styling for buttons */
+    .stats-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+    }
+    
+    .stats-button:hover {
+    background-color: #0056b3;
+    }
