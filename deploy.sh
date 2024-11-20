@@ -8,7 +8,7 @@ cd $REPO_DIR
 # Fetch changes
 git fetch origin $BRANCH
 
-# Check for updates
+# Check for updates from remote
 LOCAL=$(git rev-parse $BRANCH)
 REMOTE=$(git rev-parse origin/$BRANCH)
 
