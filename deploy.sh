@@ -1,7 +1,7 @@
 #!/bin/bash
 
-REPO_DIR="/path/to/your/repo"
-BRANCH="master"
+REPO_DIR="~/cs-connections"
+BRANCH="main"
 
 cd $REPO_DIR
 
