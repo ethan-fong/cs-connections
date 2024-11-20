@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPO_DIR="~/cs-connections"
+REPO_DIR="/home/fongetha/cs-connections"
 BRANCH="main"
 
 cd $REPO_DIR
