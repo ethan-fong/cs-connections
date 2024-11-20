@@ -2,6 +2,10 @@
 
 REPO_DIR="/home/fongetha/cs-connections"
 BRANCH="main"
+LOG_FILE="/home/fongetha/cs-connections/daily_deploy_cron.log"
+
+# Write the timestamp
+echo "----- $(date) -----" >> "$LOG_FILE"
 
 cd $REPO_DIR
 
@@ -19,6 +23,7 @@ if [ $LOCAL != $REMOTE ]; then
     rm -rf dist
     npm run build
     sudo systemctl restart apache2
+    echo "Deployment completed successfully!" >> "$LOG_FILE"
 else
-    echo "No new commits."
+    echo "No new commits." >> "$LOG_FILE"
 fi
