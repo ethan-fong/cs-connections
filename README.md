@@ -6,9 +6,7 @@ Hi! This is the CS connections project.
 
 # Frontend
 
-to run, go to the frontend folder and run
-
-npm run dev
+to run the dev setup, you can use the rundev.sh script
 
 other useful commands:
 

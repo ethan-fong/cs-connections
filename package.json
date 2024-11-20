@@ -16,6 +16,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.49.0",
     "eslint-config-react-app": "7.0.1",
+    "fitty": "^2.4.2",
     "lucide-react": "^0.288.0",
     "new-component": "5.0.2",
     "parcel": "2.9.2",

@@ -1,27 +1,3 @@
-html, body, #root {
-  width: 100%;
-  height: 100%;
-  zoom: 1.2; /* Default zoom level */
-}
-
-@media (max-width: 1200px) {
-  #root {
-    zoom: 1.3; /* Zoom in on medium-sized screens */
-  }
-}
-
-@media (max-width: 768px) {
-  #root {
-    zoom: 1.4; /* Zoom in even more for smaller screens (tablets) */
-  }
-}
-
-@media (max-width: 480px) {
-  #root {
-    zoom: 1; /* Zoom for small screens (phones) */
-  }
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -37,7 +13,6 @@ html, body, #root {
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
 
-    --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
 
     --card: 0 0% 100%;
@@ -94,12 +69,3 @@ html, body, #root {
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-}

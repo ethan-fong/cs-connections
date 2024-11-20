@@ -45,15 +45,21 @@ function InfoModal() {
                 {`You can make ${MAX_MISTAKES} mistakes before the game ends.`}
               </AccordionContent>
             </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>Anonymous Data Collection</AccordionTrigger>
+              <AccordionContent>
+                  {`Your anonymous results including guesses and time taken will be collected to help guide future games. If you do not wish to have your data collected, do not play the game.`}
+              </AccordionContent>
+          </AccordionItem>
           </Accordion>
         </TabsContent>
         <TabsContent value="about-us">
           {" "}
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
-              <AccordionTrigger>Who Are Y'all?</AccordionTrigger>
+              <AccordionTrigger>Who Made This?</AccordionTrigger>
               <AccordionContent>
-                This project is adapted from a project by andcomputers, edited by Ethan Fong.{" "}
+                This project is adapted from a project by andcomputers, edited and adapted by Ethan Fong.{" "}
                 <a
                   href="https://andcomputers.io/"
                   target="_blank"
@@ -64,57 +70,9 @@ function InfoModal() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>How Can I Support?</AccordionTrigger>
+              <AccordionTrigger>Why Does This Game Exist?</AccordionTrigger>
               <AccordionContent>
-                <p className="mb-1">If you'd like to support feel free!</p>
-                <ul className="list-disc">
-                  <li>
-                    <p>Help us make an upcoming puzzle by </p>
-                    <a
-                      href="mailto:jcp@mail.andcomputers.io"
-                      target="_blank"
-                      className="underline font-bold"
-                    >
-                      emailing the team.
-                    </a>
-                  </li>
-                  <li>
-                    <p className="mt-2 mb-1">Hi!</p>
-                    <ul>
-                    </ul>
-                  </li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>
-                Any Other Projects to Check Out?
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="grid grid-flow-row">
-                  <p>Just a few! </p>
-                  <a
-                    href="https://andcomputers.io/"
-                    target="_blank"
-                    className="underline font-bold"
-                  >
-                    - Our writing and thoughts are here.
-                  </a>
-                  <a
-                    href="https://blacktwitter.io/"
-                    target="_blank"
-                    className="underline font-bold"
-                  >
-                    - BlackTwitter
-                  </a>
-                  <a
-                    href="https://blackwords.andcomputers.io/"
-                    target="_blank"
-                    className="underline font-bold"
-                  >
-                    - Black Wordle
-                  </a>
-                </div>
+                <p className="mb-1">This game was created for a study to gauge how a connections inspired puzzle may affect student engagement with computer science concepts.</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

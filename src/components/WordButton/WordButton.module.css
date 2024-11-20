@@ -1,15 +1,11 @@
-.selected {
-  border: 2px solid black;
-}
-
 .growShrink {
   /*Tell this element which properties to animate if something changes
   We are saying all properties will animate when changed seconds*/
-  transition: all 0.4s;
+  transition: all 0.05s;
 }
 
 .growShrink[data-state="on"] {
-  transform: scale(1.05);
+  transform: scale(1.00);
 }
 
 /* .button {
@@ -50,7 +46,7 @@
 } */
 
 .growShrink {
-  transition: background-color 0.3s ease; /* Smooth transition */
+  transition: background-color 0.05s ease; /* Smooth transition */
 }
 
 .growShrink:hover {

@@ -55,6 +55,12 @@ return (
                             {`You can make ${MAX_MISTAKES} mistakes before the game ends.`}
                         </AccordionContent>
                     </AccordionItem>
+                    <AccordionItem value="item-4">
+                        <AccordionTrigger>Anonymous Data Collection</AccordionTrigger>
+                        <AccordionContent>
+                            {`Your anonymous results including guesses and time taken will be collected to help guide future games. If you do not wish to have your data collected, do not play the game.`}
+                        </AccordionContent>
+                    </AccordionItem>
                 </Accordion>
             </TabsContent>
         </Tabs>

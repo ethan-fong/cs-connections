@@ -39,7 +39,20 @@ function Game() {
     //console.log("starting game! in game.js")
     setIsGameStarted(true);
   };
-
+  React.useEffect(() => {
+    const handleResize = () => {
+      // Trigger a re-render by updating state
+      setShuffledRows([...shuffledRows]);
+    };
+  
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, [shuffledRows]);
   // use effect to update Game Grid after a row has been correctly solved
   React.useEffect(() => {
     if (!gameData){
@@ -128,13 +141,13 @@ function Game() {
 
   return (
     <>
-      <div className="text-center mt-4"> {/* Wrap the h3 in a div to maintain proper nesting */}
-        <h3 className="text-xl">
+      <div className="text-center mt-4 pb-4">
+        <h3 className="text-xl md:text-2xl lg:text-3xl">
           Create {numCategories} groups of {categorySize}
         </h3>
       </div>
 
-      <div className={`game-wrapper`}>
+      <div className="h-3/4 px-4 md:px-8 lg:px-16 pt-4 pb-4">
         {isGameOver && isGameWon ? (
           <GameWonModal
             open={isEndGameModalOpen}

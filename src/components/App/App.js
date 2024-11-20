@@ -18,9 +18,7 @@ function App() {
               <div className="wrapper">
                 <Header />
                 <Toaster />
-                <div className="gamezoomwrapper"> {/* This div applies the zoom */}
-                  <Game />
-                </div>
+                <Game />
               </div>
             </GameStatusProvider>
           </PuzzleDataProvider>

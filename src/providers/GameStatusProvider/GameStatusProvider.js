@@ -5,10 +5,6 @@ import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from "../../lib/local-storage";
-import {
-  isGameDataEquivalent,
-  isGuessesFromGame,
-} from "../../lib/game-helpers";
 export const GameStatusContext = React.createContext();
 
 function GameStatusProvider({ children }) {
@@ -26,7 +22,7 @@ function GameStatusProvider({ children }) {
   React.useEffect(() => {
     if (isGameStarted && !startTime) {
       setStartTime(Date.now()); // Set start time when the first guess is submitted
-      console.log("Start time recorded:", Date.now());
+      //console.log("Start time recorded:", Date.now());
     }
   }, [isGameStarted]);
 
@@ -40,18 +36,6 @@ function GameStatusProvider({ children }) {
         setIsGameWon(true);
       }
 
-      // Append time to guess for each new guess
-      // if (startTime) {
-      //   const currentTime = Date.now();
-      //   const timeTakenForGuess = (currentTime - startTime) / 1000;
-
-      //   setTimeToGuess((prevTimes) => {
-      //     const updatedTimes = [...prevTimes, timeTakenForGuess]; // Create a new array with the updated times
-      //     console.log("Updated timeToGuess array:", updatedTimes); // Log after updating
-      //     return updatedTimes;
-      //   });
-      // }
-
       const gameState = {
         submittedGuesses,
         solvedGameData,
@@ -60,7 +44,7 @@ function GameStatusProvider({ children }) {
         timeToGuess, // This may not have the latest time in the current render cycle, use updatedTimes inside the setTimeToGuess function to see it immediately
       };
 
-      console.log("Game state saved:", gameState);
+      //console.log("Game state saved:", gameState);
       saveGameStateToLocalStorage(gameState);
     }
   }, [solvedGameData, startTime]);

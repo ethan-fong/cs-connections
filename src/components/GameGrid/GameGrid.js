@@ -33,7 +33,7 @@ function WordRow({ words }) {
   }[columns] || 'grid-cols-1';  // Default to 1 column if out of range
 
   return (
-    <div className={`grid ${columnClass} gap-4`}>
+    <div className={`grid ${columnClass} gap-2`}>
       {words.map((word) => (
         <WordButton key={word} word={word} fullCandidateSize={words.length} />
       ))}
@@ -66,9 +66,10 @@ export function SolvedWordRow({ ...props }) {
       opacity: 0,
       transform: "translateY(100%)",
     },
-    to: {
-      opacity: 1,
-      transform: "translateY(0%)",
+    to: async (next, cancel) => {
+      await next({ opacity: 1, transform: "translateY(0%)" });
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      cancel();
     },
     delay: 250,
   });
@@ -134,7 +135,7 @@ function GameGrid({ gameRows, shouldGridShake, setShouldGridShake }) {
   return (
     <div>
       {(isGameOverAndWon || isGameActiveWithAnySolvedRows) && (
-        <div className="grid gap-y-2 pb-2">
+        <div className="grid gap-y-2 pb-4">
           {solvedGameData.map((solvedRowObj) => (
             <SolvedWordRow key={solvedRowObj.category} {...solvedRowObj} />
           ))}
@@ -149,7 +150,7 @@ function GameGrid({ gameRows, shouldGridShake, setShouldGridShake }) {
       )}
       {/* Show correct answers here after the game is over if they lost */}
       {isGameOverAndLost && (
-        <div className="grid gap-y-2 pb-2">
+        <div className="grid gap-y-2 pb-4">
           <p>The answer categories are below.</p>
           {gameData.map((obj) => (
             <SolvedWordRow key={obj.category} {...obj} />
