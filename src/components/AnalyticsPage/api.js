@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = "https://vm006.teach.cs.toronto.edu/backend/";
+const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/stats/" : "https://vm006.teach.cs.toronto.edu/backend/stats/";
 
 export const fetchGuessTimeDistribution = async (number) => {
   try {

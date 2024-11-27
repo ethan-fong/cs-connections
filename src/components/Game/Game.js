@@ -4,24 +4,23 @@ import GameGrid from "../GameGrid";
 import NumberOfMistakesDisplay from "../NumberOfMistakesDisplay";
 import GameLostModal from "../modals/GameLostModal";
 import GameWonModal from "../modals/GameWonModal";
-import StartGameModal from '../modals/StartGameModal'; // Import the StartGameModal component
-
+import StartGameModal from '../modals/StartGameModal';
 import { Separator } from "../ui/separator";
 import ConfettiExplosion from "react-confetti-explosion";
-
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 import { GameStatusContext } from "../../providers/GameStatusProvider";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
 
-const BASE_API = "https://vm006.teach.cs.toronto.edu/backend/api/";
+const BASE_API = process.env.NODE_ENV === 'development' ? "http://localhost:8080/api/" : "https://vm006.teach.cs.toronto.edu/backend/api/";
 
 function Game() {
-  const { gameData, categorySize, numCategories, error, loading, gameNumber } = React.useContext(PuzzleDataContext);
+  const { gameData, categorySize, numCategories, error, loading, gameNumber, relevantInfo } = React.useContext(PuzzleDataContext);
   const { isGameStarted, setIsGameStarted, submittedGuesses, solvedGameData, isGameOver, isGameWon, timeToGuess } =
     React.useContext(GameStatusContext);
-  //console.log("Context Values:", { gameData, categorySize, numCategories, error, loading, gameNumber });
-
   // Wait until gameData is available and then shuffle
   const [shuffledRows, setShuffledRows] = React.useState([]); // Start as an empty array
   React.useEffect(() => {
@@ -141,6 +140,14 @@ function Game() {
 
   return (
     <>
+      {relevantInfo && (
+        <div className="related-info-container p-4 mb-4 bg-gray-100 rounded-lg shadow-md mt-4 mx-4">
+          <h4 className="text-lg font-semibold mb-2">Extra Information</h4>
+          <SyntaxHighlighter language="markdown" style={solarizedlight}>
+            {relevantInfo}
+          </SyntaxHighlighter>
+        </div>
+      )}
       <div className="text-center mt-4 pb-4">
         <h3 className="text-xl md:text-2xl lg:text-3xl">
           Create {numCategories} groups of {categorySize}

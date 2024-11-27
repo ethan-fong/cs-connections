@@ -11,10 +11,11 @@ import { GameStatusContext } from "../../providers/GameStatusProvider";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Badge } from "../ui/badge";
 
-function WordRow({ words }) {
+function WordRow({ words, language }) {
   const [columns, setColumns] = React.useState(words.length);
 
   React.useEffect(() => {
+    console.log("row lang", language)
     setColumns(words.length);
   }, [words.length]);
 
@@ -31,11 +32,11 @@ function WordRow({ words }) {
     9: 'grid-cols-9',
     10: 'grid-cols-10',
   }[columns] || 'grid-cols-1';  // Default to 1 column if out of range
-
+  
   return (
     <div className={`grid ${columnClass} gap-2`}>
       {words.map((word) => (
-        <WordButton key={word} word={word} fullCandidateSize={words.length} />
+        <WordButton key={word} word={word} language={language} fullCandidateSize={words.length} />
       ))}
     </div>
   );
@@ -114,7 +115,7 @@ function GameGrid({ gameRows, shouldGridShake, setShouldGridShake }) {
   const { submittedGuesses, isGameOver, isGameWon, solvedGameData } =
     React.useContext(GameStatusContext);
 
-  const { gameData } = React.useContext(PuzzleDataContext);
+  const { gameData, language } = React.useContext(PuzzleDataContext);
 
   React.useEffect(() => {
     const shakeEffect = window.setTimeout(() => {
@@ -144,7 +145,7 @@ function GameGrid({ gameRows, shouldGridShake, setShouldGridShake }) {
       {isGameActive && (
         <div className={`grid gap-y-2 ${shouldGridShake ? styles.shake : ""}`}>
           {gameRows.map((row, idx) => (
-            <WordRow key={idx} words={row} />
+            <WordRow key={idx} words={row} language={language} />
           ))}
         </div>
       )}

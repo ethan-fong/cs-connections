@@ -1,8 +1,9 @@
 import React from "react";
-
 import InfoModal from "../modals/InfoModal";
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Home } from "lucide-react";
 
 function Header() {
   const { title, loading } = React.useContext(PuzzleDataContext);
@@ -28,6 +29,12 @@ function Header() {
     };
   }, []);
 
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/");
+  };
+
   if (loading) {
     return (
       <header className="flex flex-col items-center justify-center h-16">
@@ -42,8 +49,11 @@ function Header() {
 
   return (
     <header className="flex items-center justify-between h-16 w-full px-4">
+      <button onClick={goHome} className="mr-4">
+        <Home />
+      </button>
       <h1
-        className="font-space-mono text-center mr-4"
+        className="font-space-mono tex</button>t-center mr-4"
         style={{
           fontSize: displayTitle.length > 20 ? '1.25rem' : '1.5rem',
           whiteSpace: 'nowrap',
@@ -59,4 +69,3 @@ function Header() {
 }
 
 export default Header;
-

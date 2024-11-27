@@ -3,10 +3,12 @@ import * as styles from "./WordButton.module.css";
 import { Toggle } from "../ui/toggle";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import 'react-syntax-highlighter/dist/esm/languages/prism/java';
+import 'react-syntax-highlighter/dist/esm/languages/prism/c';
 import { GameStatusContext } from "../../providers/GameStatusProvider";
 import fitty from "fitty";
 
-function WordButton({ word, fullCandidateSize }) {
+function WordButton({ word, language, fullCandidateSize }) {
   const { guessCandidate, setGuessCandidate } = React.useContext(GameStatusContext);
   const [isSelected, setIsSelected] = React.useState(!!guessCandidate.includes(word));
   const isCandidateListFull = guessCandidate.length === fullCandidateSize;
@@ -17,6 +19,7 @@ function WordButton({ word, fullCandidateSize }) {
   }, [guessCandidate]);
 
   useEffect(() => {
+    console.log("language", language)
     const fitInstance = fitty(wordRef.current, {
       minSize: 5, // Minimum font size in pixels
       maxSize: 100, // Maximum font size in pixels
@@ -63,7 +66,7 @@ function WordButton({ word, fullCandidateSize }) {
     >
       <span ref={wordRef}>
         <SyntaxHighlighter
-          language="python" // Change this to the appropriate language
+          language={language}
           style={solarizedlight}
           customStyle={{
             display: 'inline',

@@ -1,1 +1,1 @@
-npm run dev
+PORT=1235 npm run dev

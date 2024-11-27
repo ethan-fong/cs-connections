@@ -7,6 +7,8 @@ import { Toaster } from "../ui/toaster";
 import PuzzleDataProvider from "../../providers/PuzzleDataProvider";
 import GameStatusProvider from "../../providers/GameStatusProvider";
 import AnalyticsPage from "../AnalyticsPage/AnalyticsPage"
+import HomePage from "../HomePage/HomePage";
+import CreateGame from "../CreateGame/CreateGame";
 
 function App() {
   return (
@@ -25,6 +27,12 @@ function App() {
         } />
         <Route path="/stats/:gameId" element={
             <AnalyticsPage />
+        } />
+        <Route path="/" element={
+            <HomePage />
+        } />
+        <Route path="/create/" element={
+            <CreateGame />
         } />
       </Routes>
     </Router>
