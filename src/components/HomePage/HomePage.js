@@ -90,7 +90,7 @@ const HomePage = () => {
                     const publishedGamesForCourse = publishedGames
                         .filter(game => game.course.id === course.id)
                         .sort((a, b) => {
-                            const regex = /week (\d+)/;
+                            const regex = /Week (\d+)/i;
                             const matchA = a.title.match(regex);
                             const matchB = b.title.match(regex);
                             const weekA = matchA ? Math.min(parseInt(matchA[1], 10), 12) : Number.MAX_VALUE;
