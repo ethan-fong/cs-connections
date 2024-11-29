@@ -36,6 +36,7 @@
     "react-toastify": "^10.0.6",
     "rimraf": "5.0.1",
     "styled-components": "^6.1.0",
+    "sweetalert2": "^11.14.5",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "ua-parser-js": "^1.0.36"

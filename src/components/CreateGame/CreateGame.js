@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import PreviewGame from './PreviewGame';
 import GameStatusProvider from '../../providers/GameStatusProvider';
+import Swal from 'sweetalert2';
+
 
 const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://vm006.teach.cs.toronto.edu/backend/";
 
@@ -162,15 +164,32 @@ const CreateGame = () => {
     };
 
     const handleReset = () => {
-        setLanguage('');
-        setCourse('');
-        setTitle('');
-        setInfo('');
-        setAuthor('');
-        setNumCategories(4);
-        setWordsPerCategory(4);
-        setCategories(Array.from({ length: 4 }, () => ({ name: '', words: Array(4).fill(''), explanation: '' })));
-        localStorage.clear();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, reset it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLanguage('');
+                setCourse('');
+                setTitle('');
+                setInfo('');
+                setAuthor('');
+                setNumCategories(4);
+                setWordsPerCategory(4);
+                setCategories(Array.from({ length: 4 }, () => ({ name: '', words: Array(4).fill(''), explanation: '' })));
+                localStorage.clear();
+                Swal.fire(
+                    'Reset!',
+                    'Your form has been reset.',
+                    'success'
+                );
+            }
+        });
     };
 
     const [courses, setCourses] = useState([]);
@@ -267,8 +286,8 @@ const CreateGame = () => {
                     </div>
                 ))}
                 <div className="flex space-x-4">
+                <button type="button" onClick={handleReset} className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Reset</button>
                     <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create Game</button>
-                    <button type="button" onClick={handleReset} className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-300 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Reset</button>
                 </div>
             </form>
             <div className="mt-8">

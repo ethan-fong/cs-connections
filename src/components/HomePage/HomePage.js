@@ -87,7 +87,16 @@ const HomePage = () => {
                 {courseList.map((course, index) => {
                     // Published games pagination
                     const publishedCurrentPage = publishedPageNumbers[course.id] || 1;
-                    const publishedGamesForCourse = publishedGames.filter(game => game.course.id === course.id);
+                    const publishedGamesForCourse = publishedGames
+                        .filter(game => game.course.id === course.id)
+                        .sort((a, b) => {
+                            const regex = /week (\d+)/;
+                            const matchA = a.title.match(regex);
+                            const matchB = b.title.match(regex);
+                            const weekA = matchA ? Math.min(parseInt(matchA[1], 10), 12) : Number.MAX_VALUE;
+                            const weekB = matchB ? Math.min(parseInt(matchB[1], 10), 12) : Number.MAX_VALUE;
+                            return weekA - weekB;
+                        });
                     const publishedTotalPages = Math.ceil(publishedGamesForCourse.length / 5);
                     const publishedStartIndex = (publishedCurrentPage - 1) * 5;
                     const publishedGamesToShow = publishedGamesForCourse.slice(publishedStartIndex, publishedStartIndex + 5);
