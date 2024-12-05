@@ -150,7 +150,7 @@ const CreateGame = () => {
                 if (gameCodeMatch) {
                     setGameCode(gameCodeMatch[1]);
                 }
-                handleReset(); // Clear form fields on successful submission
+                handleResetAfterSubmit(); // Clear form fields on successful submission
                 
             } else if (response.status === 400) {
                 const errorData = await response.json();
@@ -190,6 +190,18 @@ const CreateGame = () => {
                 );
             }
         });
+    };
+
+    const handleResetAfterSubmit = () => {
+        setLanguage('');
+        setCourse('');
+        setTitle('');
+        setInfo('');
+        setAuthor('');
+        setNumCategories(4);
+        setWordsPerCategory(4);
+        setCategories(Array.from({ length: 4 }, () => ({ name: '', words: Array(4).fill(''), explanation: '' })));
+        localStorage.clear();
     };
 
     const [courses, setCourses] = useState([]);
