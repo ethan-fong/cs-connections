@@ -29,13 +29,13 @@ export default function PuzzleDataProvider({ children }) {
       }
       try {
         const JSON_URL = `${BASE_API}games/code/${gameId}/?format=json`;
-        console.log('Fetching data...');
+        //console.log('Fetching data...');
         const response = await fetch(JSON_URL);
         if (!response.ok) {
           throw new Error(`Failed to fetch game data due to ${response.status} ${response.statusText}`);
         }
         let data = await response.json();
-        console.log('Fetched data:', data);
+        //console.log('Fetched data:', data);
         if (Array.isArray(data) && data.length > 0) {
           data = data[0];
         }
@@ -48,9 +48,9 @@ export default function PuzzleDataProvider({ children }) {
         setRelevantInfo(data.relevant_info);
         setLoading(false); // Set loading to false once data is fetched
       } catch (error) {
-        console.log('Fetch error:', error);
+        //console.log('Fetch error:', error);
         if (retries > 0) {
-          console.log('Retrying...');
+          //console.log('Retrying...');
           setTimeout(() => fetchGameData(retries - 1), RETRY_DELAY);
         } else {
           setError(error.message);

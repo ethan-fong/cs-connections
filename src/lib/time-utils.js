@@ -42,7 +42,7 @@ export const isValidGameDate = (date) => {
 export const getIndex = (gameDate) => {
   let start = firstGameDate;
   let index = -1;
-  console.log(firstGameDate);
+  //console.log(firstGameDate);
   do {
     index++;
     start = addDays(start, periodInDays);
@@ -64,7 +64,7 @@ export const getSolution = (gameDate) => {
   const nextGameDate = getNextGameDate(gameDate);
   const index = getIndex(gameDate);
   const puzzleOfTheDay = getPuzzleOfDay(index);
-  console.log("index for today: ", index);
+  //console.log("index for today: ", index);
   return {
     puzzleAnswers: puzzleOfTheDay,
     puzzleGameDate: gameDate,
@@ -86,7 +86,7 @@ export const getGameDate = () => {
     }
     return d;
   } catch (e) {
-    console.log(e);
+    //console.log(e);
     return getToday();
   }
 };
@@ -98,7 +98,7 @@ export const setGameDate = (d) => {
       return;
     }
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
   window.location.href = "/";
 };

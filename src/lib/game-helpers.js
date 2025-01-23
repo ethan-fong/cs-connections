@@ -22,7 +22,7 @@ export function shuffleGameData({ gameData }) {
   if (!gameData)
     return []
   let categorySize;
-  console.log("gamedata", gameData)
+  //console.log("gamedata", gameData)
   if (gameData[0]?.words) {
     categorySize = gameData[0].words.length;
   } else {

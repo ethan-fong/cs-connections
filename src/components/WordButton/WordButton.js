@@ -19,9 +19,9 @@ function WordButton({ word, language, fullCandidateSize }) {
   }, [guessCandidate]);
 
   useEffect(() => {
-    console.log("language", language)
+    //console.log("language", language)
     const fitInstance = fitty(wordRef.current, {
-      minSize: 5, // Minimum font size in pixels
+      minSize: 3, // Minimum font size in pixels
       maxSize: 100, // Maximum font size in pixels
       multiLine: true, // Ensure newlines and spaces are preserved
     });

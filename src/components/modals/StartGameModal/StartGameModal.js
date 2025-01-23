@@ -19,7 +19,7 @@ function StartGameModal(
     }
 ) {
     const handleStartGame = () => {
-        console.log("starting game!")
+        //console.log("starting game!")
         onStart();
       };
 return (

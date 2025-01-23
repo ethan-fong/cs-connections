@@ -15,7 +15,6 @@ function WordRow({ words, language }) {
   const [columns, setColumns] = React.useState(words.length);
 
   React.useEffect(() => {
-    console.log("row lang", language)
     setColumns(words.length);
   }, [words.length]);
 

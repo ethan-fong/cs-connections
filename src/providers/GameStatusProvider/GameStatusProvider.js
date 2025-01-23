@@ -62,7 +62,7 @@ function GameStatusProvider({ children }) {
 
       setTimeToGuess((prevTimes) => {
         const updatedTimes = [...prevTimes, timeTakenForGuess]; // Create a new array with the updated times
-        console.log("Updated timeToGuess array:", updatedTimes); // Log after updating
+        //console.log("Updated timeToGuess array:", updatedTimes); // Log after updating
         return updatedTimes;
       });
 
@@ -74,7 +74,7 @@ function GameStatusProvider({ children }) {
         timeToGuess, // This may not have the latest time in the current render cycle
       };
 
-      console.log("Current game state:", gameState);
+      //console.log("Current game state:", gameState);
       saveGameStateToLocalStorage(gameState);
     }
   }, [submittedGuesses]);

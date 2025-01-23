@@ -31,7 +31,7 @@ function BaseModal({
   }, [initiallyOpen]);
 
   function handleCloseEvent() {
-    console.log("modal closed");
+    //console.log("modal closed");
     onClose();
     setIsOpen(false);
   }

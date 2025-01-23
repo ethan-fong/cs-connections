@@ -78,7 +78,7 @@ function Game() {
 
     // Define a function to send the POST request
     const sendPostRequest = async () => {
-      console.log("Game Code", gameNumber);
+      //console.log("Game Code", gameNumber);
       const endGameData = {
         "gameCode" : gameNumber,
         "submittedGuesses" : submittedGuesses,  // This is an array
@@ -86,13 +86,13 @@ function Game() {
         "timeToGuess": timeToGuess,            // This is an array
       };
       if (submittedGuesses.length === 0) {
-        console.log("not sending empty data")
+        //console.log("not sending empty data")
         return;
       }
       try {
         const API_COLLECT_URL = `${BASE_API}submit-stats/`
-        console.log(API_COLLECT_URL);
-        console.log(JSON.stringify(endGameData));
+        //console.log(API_COLLECT_URL);
+        //console.log(JSON.stringify(endGameData));
         const response = await fetch(API_COLLECT_URL, {
           method: 'POST',
           headers: {
@@ -102,7 +102,7 @@ function Game() {
         });
         
         if (!response.ok) {
-          console.log(response);
+          //console.log(response);
           throw new Error('Network response was not ok');
         }
         
@@ -126,7 +126,7 @@ function Game() {
     return () => window.clearTimeout(delayModalOpen);
   }, [isGameOver]);
   if (loading) {
-    console.log("should be loading!")
+    //console.log("should be loading!")
     return <div>Loading...</div>; // Show loading indicator while data is being fetched
   }
 

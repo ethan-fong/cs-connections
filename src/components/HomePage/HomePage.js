@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import HomepageModal from "../modals/HomepageModal";
+import { InfoIcon } from 'lucide-react';
 
 const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://vm006.teach.cs.toronto.edu/backend/";
 
@@ -76,13 +78,17 @@ const HomePage = () => {
         fetchCourses();
     }, []);
 
-    const goToCreatePage = () => {
+    const goToCreatePage = (courseName) => {
+        localStorage.setItem('course', courseName);
         navigate('/create');
     };
 
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800">CS Connections</h1>
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-4xl font-extrabold text-gray-800">CS Connections</h1>
+                <HomepageModal/>
+            </div>
             <Accordion>
                 {courseList.map((course, index) => {
                     // Published games pagination
@@ -112,7 +118,7 @@ const HomePage = () => {
                         <AccordionItem key={index} className="mb-6 border rounded-lg shadow-lg">
                             <h3 className="text-2xl font-semibold p-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-t-lg cursor-pointer">{course.name}</h3>
                             <div className="p-6 bg-gray-50 rounded-b-lg">
-                                <CollapsibleSection title="Published Games">
+                                <CollapsibleSection title="Instructor Games">
                                     {publishedGamesToShow.length > 0 ? (
                                         <>
                                             {publishedGamesToShow.map((game, idx) => (
@@ -174,7 +180,7 @@ const HomePage = () => {
                                         <p>No games found.</p>
                                     )}
                                 </CollapsibleSection>
-                                <CollapsibleSection title="Unpublished Games">
+                                <CollapsibleSection title="Student Games">
                                     {unpublishedGamesToShow.length > 0 ? (
                                         <>
                                             {unpublishedGamesToShow.map((game, idx) => (
@@ -236,17 +242,17 @@ const HomePage = () => {
                                         <p>No games found.</p>
                                     )}
                                 </CollapsibleSection>
+                                <button
+                                    onClick={() => goToCreatePage(course.name)}
+                                    className="btn btn-primary bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300 mt-4"
+                                >
+                                    Create Game
+                                </button>
                             </div>
                         </AccordionItem>
                     );
                 })}
             </Accordion>
-            <button
-                onClick={goToCreatePage}
-                className="btn btn-primary bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300 mt-6"
-            >
-                Create New Game
-            </button>
             <ToastContainer />
         </div>
     );
