@@ -10,7 +10,7 @@ CS Connections is an association game where players categorize elements into gro
 
 # Example Game
 
-![CS Connections Sample Game](../docs/cs_connections_sample_game_gif.gif)
+![CS Connections Sample Game](docs/cs_connections_sample_game_gif.gif)
 
 # Instructor Game Creation
 
