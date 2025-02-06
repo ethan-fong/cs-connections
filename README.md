@@ -1,87 +1,62 @@
-# CS Connections (React, Django)
+# CS Connections
 
-Hi! This is the CS connections project.
+CS Connections is an adaptation of the popular New York Times [Connections puzzle game](https://www.nytimes.com/games/connections) designed specifically for use in the classroom. This tool allows instructors to create and share custom puzzles that help students **recognize patterns, develop problem-solving skills, and reinforce concepts** in an engaging way.
 
-# Dev information
+You can access the tool online at **[cs-connections.app](https://cs-connections.app)**.
 
-# Frontend
+# How the game works
 
-to run the dev setup, you can use the rundev.sh script
+CS Connections is an association game where players categorize elements into groups, based on a common theme. Players select elements they believe belong together, and if correct, the category is revealed. Otherwise, they receive a strike, with a maximum of four incorrect attempts before the game ends. The goal is to identify all correct categories before running out of strikes.
 
-other useful commands:
+# Example Game
 
-npm install - first time package setup
+![CS Connections Sample Game](../docs/cs_connections_sample_game_gif.gif)
 
-# Backend
+# Instructor Game Creation
 
-to run, go to the backend directory and run
+Instructors interested in having a course set up on the app can contact ethan.fong@mail.utoronto.ca
 
-python manage.py runserver
+# Motivation & Features
 
-other useful commands:
+Other NYT Connections-inspired creation tools exist. However, these tools lack important features necessary to support puzzles revolving around computing concepts. Below is a summary of the features we wanted:
 
-python manage.py makemigrations - any changes to the db/ORM structure must do this
+| **Required Feature**                                      | **Reasoning** |
+|----------------------------------------------------------|--------------|
+| The ability to customize grid size (M categories of size N) | Allows instructors to fit larger individual elements in a game and supports more flexible game creation. |
+| Support for lowercase letters | Coding languages like Python are case-sensitive, so capitalization is critical to represent code clearly. |
+| Support for special characters such as commas | These are essential for representing valid code syntax as elements. |
+| Use of whitespace characters such as newlines and tabs | These are essential for allowing longer code snippets as elements. |
+| Prerequisite information field | Helps present variable initializations or assumptions concisely. |
+| Data collection on guesses and categories | Provides insights into student performance and common challenges. |
 
-python manage.py migrate - update db structure
+Other features that make this connections app stand out:
 
-# Connections (React, Tailwind, Shadcn/ui)
+- Homepage to organize games by course
 
-This is a clone of the [NYT Connections Game](https://www.nytimes.com/games/connections). Which itself seems to be an unacknowledged clone of the British game [`Only Connect`](https://kotaku.com/new-york-times-connections-only-connect-puzzle-wordle-1850553072).
+- Student game creation portal
 
-Anyways..
+- Instructor explanations for categories
 
-### [Click Here To Try Out The Demo](https://blackconnections.andcomputers.io/)
+- Statistics view
 
-![Gif of Connections Gameplay](/frontend/docs/instructions-gif-connections.gif)
+# Self Hosting Information
 
-## To Run Locally:
+If instructors would like to host the webapp themselves (thus allowing full control over the data collected), please clone the repositories below and use your own webserver to host the app. Note that you will need to connect a database to the backend, which is currently set up to use Postgres.
 
-```
-cd react-connections-game
-npm install
-npm run dev
-```
+# Dev information & Contributing
 
-### Technology
+In order to run the codebase locally, you need to clone two repositories:
 
-- [React 18](https://react.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [React Spring](https://www.react-spring.dev/) for a few animations
-- [Shadcn/ui](https://ui.shadcn.com/) for primitive components
-- Copied a number of utility functions from a [React Wordle Clone - cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle)
-- Built with [Parcel](https://parceljs.org/)
+1. [frontend repo](https://github.com/ethan-fong/cs-connections)
 
-### Code Organization
+2. [backend repo](https://github.com/ethan-fong/connections-backend)
 
-- Global state (game status, guesses, etc.) is handled using React's Context API. The provider components are in `src/providers`
-- Components are in `src/components`
-  - Primitive components imported from `shadcn/ui` library and lightly edited are in `src/components/ui`
-  - The `Sparkles` component is taken from [Josh Comeau's article on creating animated sparkles in React.](https://www.joshwcomeau.com/react/animated-sparkles-in-react/).
-- Helper functions for local storage, game statistics, and constants are in `src/lib`
-  - The actual puzzle data for changing the content of each puzzle is in `src/lib/data.js`
-- Custom hooks are in `src/hooks`
-  - Both of these are code snippets taken from [Josh Comeau's Blog](https://www.joshwcomeau.com/snippets/)
+Then in both repositories, use the rundev.sh script to set up a local copy of the app. Note that it will use ports 1235 and 8080. You may adjust the rundev scripts if you want to use other ports.
 
-#### Similar Projects
+You can then access the frontend at localhost:1235.
 
-- [PuzzGrid](https://puzzgrid.com/about) which allows you to create your own games/puzzles, no code required.
-- [Connections Generator by swellgarfo](https://www.reddit.com/r/NYTSpellingBee/comments/152i5cx/for_those_playing_nyt_connections_i_created_a/) which also allows you to create your own games/puzzles, no code required.
+- Please fork and submit a PR if you'd like to contribute to this app! Changes to the main branch are synced and made live daily.
 
-### Contributing
+# Acknowledgements
 
-- Please fork and submit a PR if you'd like!
-
-### Projects Built Using This Repo:
-
-- _your fork here!_
-
-_Want to add one to the list? Please make a pull request._
-
-#### If you found this helpful or entertaining feel free to check out our other work!
-
-- [Writings & Thoughts](https://andcomputers.io)
-- [Black Wordle](https://blackwords.andcomputers.io)
-
-##### If you'd like to support financially
-
-- [One-Time Contribution via Stripe](https://buy.stripe.com/7sIg1Udac6xZegodQR)
+The frontend for CS-Connections is a fork of the react-connections-game by and-computers repo found at: [repo](https://github.com/and-computers/react-connections-game)
