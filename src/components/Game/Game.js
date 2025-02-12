@@ -11,9 +11,8 @@ import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 import { GameStatusContext } from "../../providers/GameStatusProvider";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
+import RelatedInfo from "./RelatedInfo";
 
 const BASE_API = process.env.NODE_ENV === 'development' ? "http://localhost:8080/api/" : "https://vm006.teach.cs.toronto.edu/backend/api/";
 
@@ -35,7 +34,6 @@ function Game() {
   const [showConfetti, setShowConfetti] = React.useState(false);
 
   const handleStartGame = () => {
-    //console.log("starting game! in game.js")
     setIsGameStarted(true);
   };
   React.useEffect(() => {
@@ -141,12 +139,7 @@ function Game() {
   return (
     <>
       {relevantInfo && (
-        <div className="related-info-container p-4 mb-4 bg-gray-100 rounded-lg shadow-md mt-4 mx-4">
-          <h4 className="text-lg font-semibold mb-2">Extra Information</h4>
-          <SyntaxHighlighter language="markdown" style={solarizedlight}>
-            {relevantInfo}
-          </SyntaxHighlighter>
-        </div>
+        <RelatedInfo relevantInfo={relevantInfo} />
       )}
       <div className="text-center mt-4 pb-4">
         <h3 className="text-xl md:text-2xl lg:text-3xl">

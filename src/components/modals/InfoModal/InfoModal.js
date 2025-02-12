@@ -1,5 +1,4 @@
 import React from "react";
-import { MAX_MISTAKES } from "../../../lib/constants";
 import { Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import {
@@ -42,7 +41,7 @@ function InfoModal() {
             <AccordionItem value="item-3">
               <AccordionTrigger>How Many Tries Do I Get?</AccordionTrigger>
               <AccordionContent>
-                {`You can make ${MAX_MISTAKES} mistakes before the game ends.`}
+                {`You can make mistakes up to the limit on the display before the game ends.`}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">

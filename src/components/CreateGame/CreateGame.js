@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import PreviewGame from './PreviewGame';
 import GameStatusProvider from '../../providers/GameStatusProvider';
 import Swal from 'sweetalert2';
-
+import { Info as InfoIcon } from "lucide-react";
 
 const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://vm006.teach.cs.toronto.edu/backend/";
 
@@ -17,9 +17,17 @@ const CreateGame = () => {
     const [info, setInfo] = useState(localStorage.getItem('info') || '');
     const [author, setAuthor] = useState(localStorage.getItem('author') || '');
     const [gameCode, setGameCode] = useState('');
+    const [maxMistakes, setMaxMistakes] = useState(Number(localStorage.getItem('maxMistakes')) || 4);
     const [numCategories, setNumCategories] = useState(Number(localStorage.getItem('numCategories')) || 4);
     const [wordsPerCategory, setWordsPerCategory] = useState(Number(localStorage.getItem('wordsPerCategory')) || 4);
     const [categories, setCategories] = useState(JSON.parse(localStorage.getItem('categories')) || Array.from({ length: 4 }, () => ({ name: '', words: Array(4).fill(''), explanation: '' })));
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [username, setUsername] = useState('');
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    useEffect(() => {
+        checkDjangoAuthentication();
+    }, []);
 
     useEffect(() => {
         localStorage.setItem('language', language);
@@ -36,6 +44,10 @@ const CreateGame = () => {
     useEffect(() => {
         localStorage.setItem('info', info);
     }, [info]);
+
+    useEffect(() => {
+        localStorage.setItem('maxMistakes', maxMistakes);
+    }, [maxMistakes]);
 
     useEffect(() => {
         localStorage.setItem('author', author);
@@ -98,6 +110,10 @@ const CreateGame = () => {
             toast.error('Please fill in all fields');
             return;
         }
+        if (!course || course === "") {
+            toast.error('Please select a course');
+            return;
+        }
 
         if (categories.some(category => !category.name || category.words.some(word => !word))) {
             toast.error('Please fill in all category names and words');
@@ -125,6 +141,7 @@ const CreateGame = () => {
                 syntax_highlighting: language,
                 author,
                 num_categories: numCategories,
+                max_mistakes: maxMistakes,
                 words_per_category: wordsPerCategory,
                 course,
                 relevant_info: info,
@@ -135,11 +152,13 @@ const CreateGame = () => {
                     explanation: category.explanation
                 }))
             };
-
+            const csrfToken = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken=')).split('=')[1];
             const response = await fetch(`${API_BASE_URL}api/upload/`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,  
                 },
                 body: JSON.stringify(adaptedGameData),
             });
@@ -179,6 +198,7 @@ const CreateGame = () => {
                 setTitle('');
                 setInfo('');
                 setAuthor('');
+                setMaxMistakes(4);
                 setNumCategories(4);
                 setWordsPerCategory(4);
                 setCategories(Array.from({ length: 4 }, () => ({ name: '', words: Array(4).fill(''), explanation: '' })));
@@ -198,10 +218,46 @@ const CreateGame = () => {
         setTitle('');
         setInfo('');
         setAuthor('');
+        setMaxMistakes(4);
         setNumCategories(4);
         setWordsPerCategory(4);
         setCategories(Array.from({ length: 4 }, () => ({ name: '', words: Array(4).fill(''), explanation: '' })));
         localStorage.clear();
+    };
+
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.type !== 'application/json') {
+                toast.error('Please upload a valid JSON file');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const jsonData = JSON.parse(event.target.result);
+                    if (!jsonData.syntax_highlighting || !jsonData.course || !jsonData.title || !jsonData.author || !jsonData.num_categories || !jsonData.words_per_category || !jsonData.game) {
+                        throw new Error('Invalid JSON structure');
+                    }
+                    setLanguage(jsonData.syntax_highlighting || '');
+                    setCourse(jsonData.course || '');
+                    setTitle(jsonData.title || '');
+                    setInfo(jsonData.relevant_info || '');
+                    setAuthor(jsonData.author || '');
+                    setNumCategories(jsonData.num_categories || 4);
+                    setWordsPerCategory(jsonData.words_per_category || 4);
+                    setCategories(jsonData.game.map(category => ({
+                        name: category.category,
+                        words: category.words,
+                        explanation: category.explanation
+                    })) || Array.from({ length: 4 }, () => ({ name: '', words: Array(4).fill(''), explanation: '' })));
+                    toast.success('JSON file uploaded successfully');
+                } catch (error) {
+                    toast.error('Failed to parse JSON file');
+                }
+            };
+            reader.readAsText(file);
+        }
     };
 
     const [courses, setCourses] = useState([]);
@@ -220,6 +276,29 @@ const CreateGame = () => {
         fetchCourses();
     }, []);
 
+    const checkDjangoAuthentication = async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}check_authenticated/`, {
+                method: 'GET',
+                credentials: 'include', // Ensure cookies are included with the request
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.authenticated) {
+                    setIsAuthenticated(true);
+                    setUsername(data.username);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            } else {
+                setIsAuthenticated(false);
+            }
+        } catch (error) {
+            setIsAuthenticated(false);
+        }
+    };
+
     return (
         <div className="max-w-2xl mx-auto p-4">
             <ToastContainer />
@@ -232,6 +311,16 @@ const CreateGame = () => {
             <div className="bg-indigo-600 text-white py-4 rounded-md shadow-md mb-6">
                 <h1 className="text-2xl font-bold text-center">Create Your Game</h1>
                 <p className="text-center mt-2">Fill in the details below to create a new game</p>
+            </div>
+            {isAuthenticated && (
+                <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                    <p className="font-bold">Authenticated as Instructor</p>
+                    <p>Welcome, {username}! You are uploading as an instructor.</p>
+                </div>
+            )}
+            <div className="mt-4 pb-4">
+                <label className="block text-sm font-medium text-gray-700">(Optional) Upload from JSON:</label>
+                <input type="file" accept=".json" onChange={handleFileUpload} className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
             </div>
             {gameCode && (
                 <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
@@ -251,6 +340,22 @@ const CreateGame = () => {
                     </select>
                 </div>
                 <div>
+                    <label className="block text-sm font-medium text-gray-700">Max Mistakes:</label>
+                    <select 
+                        value={maxMistakes} 
+                        onChange={(e) => setMaxMistakes(e.target.value === 'infinite' ? -1 : Number(e.target.value))} 
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                        <option value="infinite">Infinite</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
                     <label className="block text-sm font-medium text-gray-700">Course:</label>
                     <select value={course} onChange={(e) => setCourse(e.target.value)} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">Select Course</option>
@@ -263,9 +368,27 @@ const CreateGame = () => {
                     <label className="block text-sm font-medium text-gray-700">Title:</label>
                     <textarea value={title} onChange={(e) => setTitle(e.target.value)} className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Extra Info: (optional)</label>
-                    <textarea value={info} onChange={(e) => setInfo(e.target.value)} className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 flex items-center gap-1 cursor-pointer relative">
+                    (Optional) Extra Info:
+                    <div
+                    className="relative"
+                    onMouseEnter={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
+                    >
+                    <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700" />
+                    {showTooltip && (
+                        <div className="absolute left-6 -top-8 w-64 bg-black text-white text-xs rounded-md p-2 shadow-lg z-10 transition-opacity duration-200 opacity-100">
+                        Image links inside square brackets <code>[ ]</code> will be rendered as images.
+                        </div>
+                    )}
+                    </div>
+                </label>
+                <textarea
+                    value={info}
+                    onChange={(e) => setInfo(e.target.value)}
+                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Author:</label>
@@ -298,7 +421,7 @@ const CreateGame = () => {
                     </div>
                 ))}
                 <div className="flex space-x-4">
-                <button type="button" onClick={handleReset} className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Reset</button>
+                    <button type="button" onClick={handleReset} className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Reset</button>
                     <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create Game</button>
                 </div>
             </form>
@@ -319,6 +442,7 @@ const CreateGame = () => {
                     words={categories.map(category => category.words)}
                     related_info={info}
                     numCategories={numCategories}
+                    numMistakes={maxMistakes}
                     language={language}
                     categorySize={wordsPerCategory}
                 />

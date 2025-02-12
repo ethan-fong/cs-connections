@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Toggle } from "../ui/toggle";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import 'react-syntax-highlighter/dist/esm/languages/prism/markdown'; // Import the markdown language definition
-import 'react-syntax-highlighter/dist/esm/languages/prism/java'; // Import the java language definition
-import 'react-syntax-highlighter/dist/esm/languages/prism/c'; // Import the c language definition
+import 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
+import 'react-syntax-highlighter/dist/esm/languages/prism/java';
+import 'react-syntax-highlighter/dist/esm/languages/prism/c';
 import fitty from "fitty";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import NumberOfMistakesDisplay from "../NumberOfMistakesDisplay";
 import InfoModal from "../modals/InfoModal";
+import RelatedInfo from "../Game/RelatedInfo";
 
 function WordButton({ word, language }) {
     const wordRef = useRef(null);
@@ -81,7 +82,33 @@ function WordRow({ words, language }) {
     );
 }
 
-function GameGrid({ words, title, related_info, numCategories, categorySize, language }) {
+function GameGrid({ words, title, related_info, numCategories, categorySize, language, numMistakes }) {
+    const [tick, setTick] = useState(0);
+    const wordsRef = useRef(words);  // Store words in a ref to avoid re-renders due to prop changes
+    const relatedInfoRef = useRef(related_info); // Store related_info in a ref to avoid re-renders due to prop changes
+    const intervalRef = useRef(null);
+
+    useEffect(() => {
+        // Only set up the interval once
+        intervalRef.current = setInterval(() => {
+            setTick((prev) => prev + 1);
+        }, 1000);
+
+        return () => {
+            // Cleanup interval on unmount
+            clearInterval(intervalRef.current);
+        };
+    }, []); // This will run only once on mount
+
+    // If props are changing, update the refs but not the state
+    useEffect(() => {
+        wordsRef.current = words;
+    }, [words]);
+
+    useEffect(() => {
+        relatedInfoRef.current = related_info;
+    }, [related_info]);
+
     return (
         <div>
             <div className="flex items-center justify-between h-16 w-full px-4" style={{ borderBottom: '1px solid var(--color-gray-700)' }}>
@@ -98,26 +125,21 @@ function GameGrid({ words, title, related_info, numCategories, categorySize, lan
                 </h1>
                 <InfoModal />
             </div>
-            {related_info && (
-                <div className="related-info-container p-4 mb-4 bg-gray-100 rounded-lg shadow-md mt-4">
-                    <h4 className="text-lg font-semibold mb-2">Extra Information</h4>
-                    <SyntaxHighlighter language="markdown" style={solarizedlight}>
-                        {related_info}
-                    </SyntaxHighlighter>
-                </div>
+            {relatedInfoRef.current && (
+                <RelatedInfo relevantInfo={relatedInfoRef.current} />
             )}
             <div className="text-center mt-4 pb-4">
                 <h3 className="text-xl md:text-2xl lg:text-3xl">
                     Create {numCategories} groups of {categorySize}
                 </h3>
             </div>
-            {Array.isArray(words) && words.map((row, idx) => (
+            {Array.isArray(wordsRef.current) && wordsRef.current.map((row, idx) => (
                 <div key={idx} className="mb-4">
                     <WordRow language={language} words={Array.isArray(row) ? row : [row]} />
                 </div>
             ))}
             <>
-                <NumberOfMistakesDisplay />
+                <NumberOfMistakesDisplay numMistakesUsed={0} maxMistakes={numMistakes} />
                 <GameControlButtonsPanel
                     shuffledRows={["a", "b"]}
                     setShuffledRows={() => {}}

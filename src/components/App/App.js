@@ -8,13 +8,31 @@ import PuzzleDataProvider from "../../providers/PuzzleDataProvider";
 import GameStatusProvider from "../../providers/GameStatusProvider";
 import AnalyticsPage from "../AnalyticsPage/AnalyticsPage"
 import HomePage from "../HomePage/HomePage";
+import InstructorPage from "../InstructorPage/InstructorPage";
 import CreateGame from "../CreateGame/CreateGame";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={
+            <HomePage />
+        } />
+        <Route path="/instructor/" element={
+            <InstructorPage />
+        } />
         <Route path="/play/:gameId" element={
+          <PuzzleDataProvider>
+            <GameStatusProvider>
+              <div className="wrapper">
+                <Header />
+                <Toaster />
+                <Game />
+              </div>
+            </GameStatusProvider>
+          </PuzzleDataProvider>
+        } />
+        <Route path="/preview/:gameId" element={
           <PuzzleDataProvider>
             <GameStatusProvider>
               <div className="wrapper">
@@ -27,9 +45,6 @@ function App() {
         } />
         <Route path="/stats/:gameId" element={
             <AnalyticsPage />
-        } />
-        <Route path="/" element={
-            <HomePage />
         } />
         <Route path="/create/" element={
             <CreateGame />

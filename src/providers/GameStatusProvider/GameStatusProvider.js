@@ -1,14 +1,11 @@
 import React from "react";
-import { MAX_MISTAKES } from "../../lib/constants";
 import { PuzzleDataContext } from "../PuzzleDataProvider";
-import {
-  loadGameStateFromLocalStorage,
-  saveGameStateToLocalStorage,
-} from "../../lib/local-storage";
+import { saveGameStateToLocalStorage } from "../../lib/local-storage";
+
 export const GameStatusContext = React.createContext();
 
 function GameStatusProvider({ children }) {
-  const { gameData } = React.useContext(PuzzleDataContext);
+  const { gameData, maxMistakes } = React.useContext(PuzzleDataContext);
   const [submittedGuesses, setSubmittedGuesses] = React.useState([]);
   const [startTime, setStartTime] = React.useState(null); // Start time
   const [timeToGuess, setTimeToGuess] = React.useState([]); // Array to track times for each guess
@@ -17,12 +14,11 @@ function GameStatusProvider({ children }) {
   const [isGameWon, setIsGameWon] = React.useState(false);
   const [guessCandidate, setGuessCandidate] = React.useState([]);
   const [isGameStarted, setIsGameStarted] = React.useState(false);
-  
+
   // Set startTime once when the first guess is made
   React.useEffect(() => {
     if (isGameStarted && !startTime) {
       setStartTime(Date.now()); // Set start time when the first guess is submitted
-      //console.log("Start time recorded:", Date.now());
     }
   }, [isGameStarted]);
 
@@ -43,16 +39,18 @@ function GameStatusProvider({ children }) {
         startTime,
         timeToGuess, // This may not have the latest time in the current render cycle, use updatedTimes inside the setTimeToGuess function to see it immediately
       };
-
-      //console.log("Game state saved:", gameState);
       saveGameStateToLocalStorage(gameState);
     }
   }, [solvedGameData, startTime]);
 
   // Use effect to check if all mistakes have been used and end the game accordingly
   React.useEffect(() => {
+    console.log(maxMistakes);
     if (gameData && startTime) {
-      if (numMistakesUsed >= MAX_MISTAKES) {
+      // Handle case where maxMistakes is undefined or -1 (unlimited mistakes)
+      const limitMistakes = maxMistakes !== undefined && maxMistakes !== -1;
+
+      if (limitMistakes && numMistakesUsed > maxMistakes) {
         setIsGameOver(true);
         setIsGameWon(false);
       }
@@ -62,7 +60,6 @@ function GameStatusProvider({ children }) {
 
       setTimeToGuess((prevTimes) => {
         const updatedTimes = [...prevTimes, timeTakenForGuess]; // Create a new array with the updated times
-        //console.log("Updated timeToGuess array:", updatedTimes); // Log after updating
         return updatedTimes;
       });
 
@@ -73,11 +70,9 @@ function GameStatusProvider({ children }) {
         startTime,
         timeToGuess, // This may not have the latest time in the current render cycle
       };
-
-      //console.log("Current game state:", gameState);
       saveGameStateToLocalStorage(gameState);
     }
-  }, [submittedGuesses]);
+  }, [submittedGuesses, gameData, startTime, maxMistakes]); // Add maxMistakes to the dependencies to trigger effect on changes
 
   return (
     <GameStatusContext.Provider
@@ -88,6 +83,7 @@ function GameStatusProvider({ children }) {
         setIsGameOver,
         isGameWon,
         numMistakesUsed,
+        maxMistakes, // Still passing down maxMistakes through context
         solvedGameData,
         setSolvedGameData,
         submittedGuesses,
@@ -102,4 +98,5 @@ function GameStatusProvider({ children }) {
     </GameStatusContext.Provider>
   );
 }
+
 export default GameStatusProvider;

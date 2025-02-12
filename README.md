@@ -14,7 +14,7 @@ CS Connections is an association game where players categorize elements into gro
 
 # Instructor Game Creation
 
-Instructors interested in having a course set up on the app can contact ethan.fong@mail.utoronto.ca
+Instructors interested in having a course and account set up on the app can contact ethan.fong@mail.utoronto.ca
 
 # Motivation & Features
 
@@ -33,11 +33,17 @@ Other features that make this connections app stand out:
 
 - Homepage to organize games by course
 
-- Student game creation portal
+- Student and instructor game creation portal
 
 - Instructor explanations for categories
 
 - Statistics view
+
+- Images in the puzzles
+
+- Instructor dashboard
+
+- Variable number of mistakes
 
 # Self Hosting Information
 

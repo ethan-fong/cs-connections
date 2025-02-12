@@ -13,7 +13,11 @@ function HomepageModal() {
   return (
     <BaseModal
       title=""
-      trigger={<Info className="mr-4" />}
+      trigger={
+        <Info
+          className="mr-4 h-12 w-12 text-blue-600 cursor-pointer hover:text-blue-700 transition-all duration-200"
+        />
+      }
       initiallyOpen={false}
       actionButtonText="Got It!"
     >
@@ -27,13 +31,13 @@ function HomepageModal() {
             <AccordionItem value="item-1">
               <AccordionTrigger>Creating a Course</AccordionTrigger>
               <AccordionContent>
-                Please use an institutional email and contact ethan.fong@mail.utoronto.ca to request the creation of a course on this app.
+                Please use an institutional email and contact ethan.fong@mail.utoronto.ca to request the creation of a course and instructor account on this app.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger>Uploading Games</AccordionTrigger>
               <AccordionContent>
-                Once a course has been created, you will also be given credentials to upload games via a separate backend site.
+                Once a course has been created, you will also be given instructor credentials to upload and delete games in your course!
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
