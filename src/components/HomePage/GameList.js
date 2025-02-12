@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Download } from 'lucide-react';
 
-JSON_EXCLUDED_FIELDS = ["id", "game_code", "published", "created_at"];
+const JSON_EXCLUDED_FIELDS = ["id", "game_code", "published", "created_at"];
 
 const CollapsibleSection = ({ title, children }) => {
     const [isOpen, setIsOpen] = useState(false);
