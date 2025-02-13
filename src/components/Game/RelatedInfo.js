@@ -16,7 +16,7 @@ function extractLinks(text) {
 }
 
 function RelatedInfo({ relevantInfo }) {
-    console.log("relevant info", relevantInfo);
+    //console.log("relevant info", relevantInfo);
     if (!relevantInfo) return null;
 
     const extractedData = useMemo(() => extractLinks(relevantInfo), [relevantInfo]);
@@ -32,7 +32,7 @@ function RelatedInfo({ relevantInfo }) {
     }, [relevantInfo]);
 
     useEffect(() => {
-        console.log("Links changed", links);
+        //console.log("Links changed", links);
         if (fetchedImages.current || links.length === 0) return;
         fetchedImages.current = true;
 
@@ -53,7 +53,7 @@ function RelatedInfo({ relevantInfo }) {
                 .filter(result => result.valid)
                 .map(({ url, index }) => ({ url, index }))
                 .sort((a, b) => a.index - b.index);
-            console.log("Valid images", validImages);
+            //console.log("Valid images", validImages);
             setImageLinks((prev) => {
                 if (
                     prev.length === validImages.length &&
