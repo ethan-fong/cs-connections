@@ -16,6 +16,7 @@ function extractLinks(text) {
 }
 
 function RelatedInfo({ relevantInfo }) {
+    console.log("relevant info", relevantInfo);
     if (!relevantInfo) return null;
 
     const extractedData = useMemo(() => extractLinks(relevantInfo), [relevantInfo]);
@@ -31,6 +32,7 @@ function RelatedInfo({ relevantInfo }) {
     }, [relevantInfo]);
 
     useEffect(() => {
+        console.log("Links changed", links);
         if (fetchedImages.current || links.length === 0) return;
         fetchedImages.current = true;
 
@@ -43,8 +45,6 @@ function RelatedInfo({ relevantInfo }) {
                     img.onload = () => resolve({ valid: true, url, index });
                     img.onerror = () => resolve({ valid: false, url, index });
             
-                    // Force Safari to cache properly by setting the src again
-                    setTimeout(() => { img.src = url; }, 50);
                 });
             };
 
@@ -53,7 +53,7 @@ function RelatedInfo({ relevantInfo }) {
                 .filter(result => result.valid)
                 .map(({ url, index }) => ({ url, index }))
                 .sort((a, b) => a.index - b.index);
-
+            console.log("Valid images", validImages);
             setImageLinks((prev) => {
                 if (
                     prev.length === validImages.length &&
@@ -86,6 +86,7 @@ function RelatedInfo({ relevantInfo }) {
                             <img
                                 src={url}
                                 alt={`Extra info ${index}`}
+                                loading="lazy"
                                 className="max-w-full h-auto rounded-lg shadow-md"
                             />
                         </div>
