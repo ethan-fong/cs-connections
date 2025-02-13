@@ -7,7 +7,7 @@ import GameStatusProvider from '../../providers/GameStatusProvider';
 import Swal from 'sweetalert2';
 import { Info as InfoIcon } from "lucide-react";
 
-const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://vm006.teach.cs.toronto.edu/backend/";
+const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://cs-connections.app/backend/";
 
 const CreateGame = () => {
     const navigate = useNavigate();

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HomepageModal from "../modals/HomepageModal";
 import { Home } from "lucide-react";
 
-const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://vm006.teach.cs.toronto.edu/backend/";
+const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://cs-connections.app/backend/";
 
 const InstructorPage = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,9 +44,13 @@ const InstructorPage = () => {
 
     const checkDjangoAuthentication = async () => {
         try {
+            const csrfToken = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken=')).split('=')[1];
             const response = await fetch(`${API_BASE_URL}check_authenticated/`, {
                 method: 'GET',
                 credentials: 'include', // Ensure cookies are included with the request
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                },
             });
 
             if (response.ok) {
