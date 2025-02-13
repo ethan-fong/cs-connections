@@ -35,13 +35,18 @@ function RelatedInfo({ relevantInfo }) {
         fetchedImages.current = true;
 
         async function checkImages() {
-            const checkImage = ({ url, index }) => {
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    img.onload = () => resolve({ valid: true, url, index });
-                    img.onerror = () => resolve({ valid: false, url, index });
-                    img.src = url;
-                });
+            const checkImage = async ({ url, index }) => {
+                try {
+                    const response = await fetch(url, { method: "HEAD", cache: "force-cache" });
+                    const contentType = response.headers.get("Content-Type");
+
+                    if (response.ok && contentType && contentType.startsWith("image/")) {
+                        return { valid: true, url, index };
+                    }
+                } catch (error) {
+                    console.warn(`Image check failed for: ${url}`, error);
+                }
+                return { valid: false, url, index };
             };
 
             const results = await Promise.all(links.map(checkImage));
@@ -51,10 +56,10 @@ function RelatedInfo({ relevantInfo }) {
                 .sort((a, b) => a.index - b.index);
 
             setImageLinks((prev) => {
-                const prevUrls = prev.map((img) => img.url);
-                const newUrls = validImages.map((img) => img.url);
-
-                if (JSON.stringify(prevUrls) === JSON.stringify(newUrls)) {
+                if (
+                    prev.length === validImages.length &&
+                    prev.every((img, i) => img.url === validImages[i].url)
+                ) {
                     return prev; // Prevent unnecessary re-renders
                 }
                 return validImages;
