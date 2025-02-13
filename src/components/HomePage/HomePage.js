@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import GameList from "./GameList";
 import ResponsiveHeading from './ResponsiveHeading';
 
-const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://vm006.teach.cs.toronto.edu/backend/";
+const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://cs-connections.app/backend/";
 
 const HomePage = () => {
     const navigate = useNavigate();

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GraduationCap } from "lucide-react";
 import HomepageModal from "../modals/HomepageModal"; // Assuming you already have this component
 
-const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://vm006.teach.cs.toronto.edu/backend/";
+const API_BASE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:8080/" : "https://cs-connections.app/backend/";
 
 function ResponsiveHeader() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
