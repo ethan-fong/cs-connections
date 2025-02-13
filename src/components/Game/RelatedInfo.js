@@ -18,16 +18,17 @@ function extractLinks(text) {
 function RelatedInfo({ relevantInfo }) {
     if (!relevantInfo) return null;
 
-    const [imageLinks, setImageLinks] = useState([]);
     const extractedData = useMemo(() => extractLinks(relevantInfo), [relevantInfo]);
     const { cleanedText, links } = extractedData;
 
+    const [imageLinks, setImageLinks] = useState([]);
+
     useEffect(() => {
         if (links.length === 0) return;
-    
+
         async function checkImages() {
-            const validImages = [];
-    
+            let validImages = [];
+
             await Promise.all(
                 links.map(async ({ url, index }) => {
                     try {
@@ -41,18 +42,20 @@ function RelatedInfo({ relevantInfo }) {
                     }
                 })
             );
-    
-            // Update state only if the data actually changed
+
+            validImages.sort((a, b) => a.index - b.index);
+
             setImageLinks((prev) => {
-                const prevUrls = new Set(prev.map((img) => img.url));
-                const newUrls = new Set(validImages.map((img) => img.url));
-                if (prevUrls.size === newUrls.size && [...prevUrls].every((url) => newUrls.has(url))) {
-                    return prev; // No change, prevent unnecessary re-render
+                const prevUrls = prev.map((img) => img.url);
+                const newUrls = validImages.map((img) => img.url);
+
+                if (JSON.stringify(prevUrls) === JSON.stringify(newUrls)) {
+                    return prev; // Prevent unnecessary re-renders
                 }
                 return validImages;
             });
         }
-    
+
         checkImages();
     }, [links]);
 
@@ -67,10 +70,10 @@ function RelatedInfo({ relevantInfo }) {
             )}
 
             {imageLinks.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-4">
+                <div className="mt-4 flex flex-wrap gap-4 justify-center">
                     {imageLinks.map(({ url, index }) => (
                         <div key={url} className="flex flex-col items-center">
-                            <span className="text-sm font-semibold">[Image {index}]</span>
+                            <span className="text-sm font-semibold mb-2">[Image {index}]</span>
                             <img
                                 src={url}
                                 alt={`Extra info ${index}`}
