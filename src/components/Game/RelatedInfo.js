@@ -35,18 +35,17 @@ function RelatedInfo({ relevantInfo }) {
         fetchedImages.current = true;
 
         async function checkImages() {
-            const checkImage = async ({ url, index }) => {
-                try {
-                    const response = await fetch(url, { method: "HEAD", cache: "force-cache" });
-                    const contentType = response.headers.get("Content-Type");
-
-                    if (response.ok && contentType && contentType.startsWith("image/")) {
-                        return { valid: true, url, index };
-                    }
-                } catch (error) {
-                    console.warn(`Image check failed for: ${url}`, error);
-                }
-                return { valid: false, url, index };
+            const checkImage = ({ url, index }) => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = url;
+            
+                    img.onload = () => resolve({ valid: true, url, index });
+                    img.onerror = () => resolve({ valid: false, url, index });
+            
+                    // Force Safari to cache properly by setting the src again
+                    setTimeout(() => { img.src = url; }, 50);
+                });
             };
 
             const results = await Promise.all(links.map(checkImage));
