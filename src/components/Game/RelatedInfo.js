@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -7,7 +7,7 @@ function extractLinks(text) {
     let index = 1;
     const extractedLinks = [];
 
-    const cleanedText = text.replace(linkRegex, (match, url) => {
+    const cleanedText = text.replace(linkRegex, (_, url) => {
         extractedLinks.push({ url, index });
         return `[Image ${index++}]`; // Replace with numbered placeholder
     });
@@ -22,28 +22,33 @@ function RelatedInfo({ relevantInfo }) {
     const { cleanedText, links } = extractedData;
 
     const [imageLinks, setImageLinks] = useState([]);
+    const fetchedImages = useRef(false);
+
+    // Reset fetchedImages flag when relevantInfo changes to allow re-fetching images.
+    useEffect(() => {
+        fetchedImages.current = false;
+        setImageLinks([]);
+    }, [relevantInfo]);
 
     useEffect(() => {
-        if (links.length === 0) return;
+        if (fetchedImages.current || links.length === 0) return;
+        fetchedImages.current = true;
 
         async function checkImages() {
-            let validImages = [];
+            const checkImage = ({ url, index }) => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => resolve({ valid: true, url, index });
+                    img.onerror = () => resolve({ valid: false, url, index });
+                    img.src = url;
+                });
+            };
 
-            await Promise.all(
-                links.map(async ({ url, index }) => {
-                    try {
-                        const response = await fetch(url, { method: "HEAD" });
-                        const contentType = response.headers.get("Content-Type");
-                        if (contentType && contentType.startsWith("image/")) {
-                            validImages.push({ url, index });
-                        }
-                    } catch (error) {
-                        console.error(`Failed to check image URL: ${url}`, error);
-                    }
-                })
-            );
-
-            validImages.sort((a, b) => a.index - b.index);
+            const results = await Promise.all(links.map(checkImage));
+            const validImages = results
+                .filter(result => result.valid)
+                .map(({ url, index }) => ({ url, index }))
+                .sort((a, b) => a.index - b.index);
 
             setImageLinks((prev) => {
                 const prevUrls = prev.map((img) => img.url);
