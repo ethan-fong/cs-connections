@@ -97,7 +97,11 @@ function RelatedInfo({ relevantInfo }) {
             <h4 className="text-lg font-semibold mb-2">Extra Information</h4>
             
             {cleanedText && (
-                <SyntaxHighlighter language="markdown" style={solarizedlight}>
+                <SyntaxHighlighter
+                    language="markdown"
+                    style={solarizedlight}
+                    wrapLongLines={true} // This makes long lines wrap rather than scroll.
+                >
                     {cleanedText}
                 </SyntaxHighlighter>
             )}
