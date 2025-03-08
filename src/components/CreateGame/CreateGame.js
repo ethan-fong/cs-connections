@@ -379,7 +379,7 @@ const CreateGame = () => {
                     <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700" />
                     {showTooltip && (
                         <div className="absolute left-6 -top-8 w-64 bg-black text-white text-xs rounded-md p-2 shadow-lg z-10 transition-opacity duration-200 opacity-100">
-                        Image links inside square brackets <code>[ ]</code> will be rendered as images.
+                        Image links inside square brackets <code>[ ]</code> will be rendered as images. Hints can be added using the syntax [hint: your hint here].
                         </div>
                     )}
                     </div>
