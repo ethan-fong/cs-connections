@@ -26,6 +26,35 @@ function ResponsiveHeader() {
     // Cleanup the event listener on unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+    
+const handleInstructorClick = async () => {
+  try {
+    const csrfToken = document.cookie
+      .split(';')
+      .find(cookie => cookie.trim().startsWith('csrftoken='))
+      ?.split('=')[1];
+
+    const response = await fetch(`${API_BASE_URL}check_authenticated/`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'X-CSRFToken': csrfToken,
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.authenticated) {
+      window.location.href = `${window.location.origin}/instructor/`;
+    } else {
+      // Clear the sessionid cookie by setting it to expire
+      window.location.href = `${API_BASE_URL}accounts/login`;
+    }
+  } catch (error) {
+    console.error('Error checking authentication', error);
+    window.location.href = `${API_BASE_URL}accounts/login`;
+  }
+};
 
   return (
     <div className="container mx-auto p-6">
@@ -49,7 +78,7 @@ function ResponsiveHeader() {
               <div className="relative group">
                 <GraduationCap
                   className="h-12 w-12 text-blue-600 cursor-pointer hover:text-blue-700 transition-all duration-200"
-                  onClick={() => window.location.href = `${API_BASE_URL}accounts/login`}
+                  onClick={handleInstructorClick}
                 />
                 <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-40 bg-gray-800 text-white text-sm rounded-md py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 text-center">
                   Instructor Login
@@ -71,7 +100,7 @@ function ResponsiveHeader() {
               <div className="relative group">
                 <GraduationCap
                   className="h-12 w-12 text-blue-600 cursor-pointer hover:text-blue-700 transition-all duration-200"
-                  onClick={() => window.location.href = `${API_BASE_URL}accounts/login`}
+                  onClick={handleInstructorClick}
                 />
                 <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-32 bg-gray-800 text-white text-sm rounded-md py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 text-center">
                   Instructor Login

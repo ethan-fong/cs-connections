@@ -52,16 +52,21 @@ function WordButton({ word, language, fullCandidateSize }) {
 
   return (
     <Toggle
-      id={`toggle-${word}`} // Unique ID for the toggle
-      className={`${styles.growShrink} select-none`}
+      id={`toggle-${word}`}
+      className={`
+        ${styles.growShrink}
+        select-none
+        transition-all duration-200
+        [data-state=off]:hover:!bg-transparent
+        hover:shadow-[0_0_0_2px_rgba(59,130,246,0.5)]
+      `}
       variant="outline"
       pressed={isSelected}
       onClick={flipSelection}
       style={{
         height: '100%',
-        width: '100%', // Allow it to take full width of its container
-        boxSizing: 'border-box', // Ensure padding is included in the element's total width and height
-        border: '1px solid grey', // Added grey border
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
       <span ref={wordRef}>
@@ -72,7 +77,7 @@ function WordButton({ word, language, fullCandidateSize }) {
             display: 'inline',
             padding: '2px',
             borderRadius: '4px',
-            whiteSpace: 'pre-wrap', // Preserve newlines and indentation
+            whiteSpace: 'pre-wrap',
             backgroundColor: '#ffffff',
           }}
         >

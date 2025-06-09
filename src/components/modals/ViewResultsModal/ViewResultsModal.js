@@ -30,7 +30,6 @@ function ViewResultsModal() {
           {"\n"}
           {generateEmojiGrid(gameData, submittedGuesses)}
         </span>
-        <CountdownToNextPuzzle />
       </div>
     </BaseModal>
   );
