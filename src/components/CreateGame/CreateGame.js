@@ -152,14 +152,21 @@ const CreateGame = () => {
                     explanation: category.explanation
                 }))
             };
-            const csrfToken = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken=')).split('=')[1];
+            const csrfCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken='));
+            const csrfToken = csrfCookie ? csrfCookie.split('=')[1] : null;
+
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+
+            if (csrfToken) {
+                headers['X-CSRFToken'] = csrfToken;
+            }
+
             const response = await fetch(`${API_BASE_URL}api/upload/`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken,  
-                },
+                headers: headers,
                 body: JSON.stringify(adaptedGameData),
             });
             if (response.ok) {
